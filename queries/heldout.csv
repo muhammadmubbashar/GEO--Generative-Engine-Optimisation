@@ -1,0 +1,8 @@
+id,stratum,group,intent,query,source,paraphrase_of,corpus_note
+H01,heldout,Flights,Consideration,cheap flights from sydney to melbourne,heldout paraphrase of client intent,Q02,same route pages as Q02 — different wording
+H02,heldout,Flights,Consideration,melbourne to london flights,heldout paraphrase of client intent,Q06,same route pages as Q06
+H03,heldout,Flights,Consideration,business class flights from australia,heldout paraphrase of client intent,Q09,cabin pages; wording closer to search-engine style
+H04,heldout,Flights,Consideration,round the world airfare,heldout paraphrase of client intent,Q11,RTW pages; shorter query form
+H05,heldout,Flights,Consideration,flights from australia to the usa,heldout paraphrase of client intent,Q08,US hubs; USA vs United States lexical variant
+H06,heldout,Flights,Informational,what’s the difference between non-stop direct and connecting flights,heldout aligned to FC window-seat page,Q_advice,FC flight_advice page exists; Webjet/Expedia thin
+H07,heldout,Flights,Informational,what should I do if my flight is cancelled,heldout aligned to FC window-seat page,Q_advice,FC cancellation advice page; tests advice GEO

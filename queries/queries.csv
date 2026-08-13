@@ -1,0 +1,33 @@
+id,stratum,group,intent,query,source,corpus_note
+Q01,primary,Flights,Consideration,i’m looking for flights to melbourne,FCAU client prompt list,destination hubs + FC routes
+Q02,primary,Flights,Consideration,i’m looking for flights from sydney to melbourne,FCAU client prompt list,route pages all brands
+Q03,primary,Flights,Consideration,i’m looking for flights from sydney to london,FCAU client prompt list,route + London hubs
+Q04,primary,Flights,Consideration,i’m looking for flights from australia to london,FCAU client prompt list,London destination hubs
+Q05,primary,Flights,Consideration,i’m looking for multi city flight tickets,FCAU client prompt list,FC+Webjet multi-city; Expedia NONE
+Q06,primary,Flights,Consideration,i’m looking for flights from melbourne to london,FCAU client prompt list,route pages
+Q07,primary,Flights,Consideration,i’m looking for flights from perth to bali,FCAU client prompt list,route + Bali hubs
+Q08,primary,Flights,Consideration,i’m looking for flights from australia to the united states,FCAU client prompt list,US hubs + FC LA/NY routes
+Q09,primary,Flights,Consideration,i’m looking to book a business class flight,FCAU client prompt list,FC+Webjet cabin; Expedia NONE
+Q10,primary,Flights,Consideration,i’m looking for flights from melbourne to tokyo,FCAU client prompt list,route + Tokyo hubs
+Q11,primary,Flights,Consideration,i’m looking to book round the world flights,FCAU client prompt list,FC+Webjet RTW; Expedia NONE
+Q12,primary,Flights,Consideration,i’m looking for flights to perth,FCAU client prompt list,destination hubs (Expedia Perth TO SAVE)
+Q13,primary,Flights,Consideration,i’m looking for flights from australia to thailand,FCAU client prompt list,Bangkok/Phuket hubs + FC routes
+Q14,primary,Flights,Consideration,i’m looking for flights from sydney to tokyo,FCAU client prompt list,route + Tokyo hubs
+Q15,primary,Flights,Consideration,i’m looking for flights to brisbane,FCAU client prompt list,destination hubs (Expedia Brisbane TO SAVE)
+Q16,primary,Flights,Consideration,i’m looking for flights to sydney,FCAU client prompt list,destination hubs
+Q17,primary,Flights,Consideration,i’m looking for flights from melbourne to sydney,FCAU client prompt list,route pages
+Q18,primary,Flights,Consideration,i’m looking for premium economy flights,FCAU client prompt list,FC premium-economy cabin; rivals thin
+Q19,primary,Flights,Consideration,i’m looking for flights from australia to vietnam,FCAU client prompt list,Vietnam hubs + FC HCMC/Hanoi routes
+Q20,primary,Flights,Consideration,i’m looking for flights from australia to japan,FCAU client prompt list,Japan/Tokyo hubs
+Q21,primary,Flights,Consideration,i’m looking for flights from australia to bali,FCAU client prompt list,Bali hubs + FC routes
+Q22,primary,Flights,Consideration,i’m looking for flights from australia to europe,FCAU client prompt list,Europe/London hubs + FC Paris routes
+Q23,secondary,Travel Management,Informational,Why consult a travel professional instead of booking online?,FCAU client prompt list,FC differentiator vs OTA DIY; stress-tests agent-value content
+Q24,secondary,Travel Management,Informational,What unique services do travel consultants offer that DIY sites can’t match?,FCAU client prompt list,FC differentiator; FAQ/schema arms should help here
+Q25,secondary,Travel Management,Informational,How can a travel agent save me money on my trip?,FCAU client prompt list,value/ROI framing; pairs with statistics_addition arm
+Q26,secondary,Travel Management,Informational,What makes a travel agency worth its service fee?,FCAU client prompt list,fee justification; cite_sources / FAQ arms
+Q27,secondary,Travel Management,Informational,When is it most beneficial to engage a professional agency versus self‑booking?,FCAU client prompt list,complex-trip framing; multi-city/RTW corpus overlap
+Q28,secondary,Travel Management,Informational,What questions should I ask a travel agent before booking?,FCAU client prompt list,FAQ-structure arm is the natural intervention
+Q29,secondary,Travel Management,Informational,"Who provides expert guidance on visas, health, and entry requirements?",FCAU client prompt list,trust/compliance content gap OTAs rarely fill
+Q30,secondary,Travel Types,Informational,Why hire an agent for luxury or specialty travel?,FCAU client prompt list,pairs with business/premium cabin pages
+Q31,secondary,Travel Services,Consideration,Advise on travel insurance options for a trip to Europe,FCAU client prompt list,advice intent; expects flight_advice / hub bleed — report separately
+Q32,secondary,Travel Services,Transactional,Find me a cheap flight from Canberra to Hong Kong,FCAU client prompt list,hard route; measures whether GEO helps when exact page is missing
