@@ -6,6 +6,9 @@ features our interventions add (author names, dates, schema) would guarantee
 its own result. Letting the model choose keeps the measurement honest.
 """
 from .prompts import GENERATION_PROMPT, build_prompt
-from .generator import Generator, GenerationRecord
+from .generator import Generator, GenerationRecord, prompt_char_budget
 
-__all__ = ["GENERATION_PROMPT", "build_prompt", "Generator", "GenerationRecord"]
+__all__ = [
+    "GENERATION_PROMPT", "build_prompt", "Generator", "GenerationRecord",
+    "prompt_char_budget",
+]

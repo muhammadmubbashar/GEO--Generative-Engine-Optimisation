@@ -15,11 +15,12 @@ Puerto, Gubri et al. "C-SEO Bench: Does Conversational SEO Work?" NeurIPS 2025
 
 Package layout
 --------------
-    crawler/     acquire and freeze the corpus
+    crawler/     usable-content QC on the frozen live pool
+    search/      Brave freeze (fan-out × capture 20 / analyse 10)
     retrieval/   parse, chunk, embed, index, retrieve
     generation/  prompt construction and answer generation
     api/         LLM provider abstraction (offline | openai)
-    evaluation/  metrics and statistics
-    experiment/  orchestration and control tests
+    evaluation/  counted + judged metrics and statistics
+    experiment/  freeze store, protocol lock, routing, control tests
 """
 __version__ = "0.1.0"

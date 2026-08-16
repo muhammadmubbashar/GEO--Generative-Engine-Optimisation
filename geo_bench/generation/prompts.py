@@ -23,12 +23,22 @@ GENERATION_PROMPT = (
     "Question: {query}\n\nSearch Results:\n{sources}"
 )
 
-MAX_PASSAGE_CHARS = 1200
+# Fallback only; the runner passes Config.page_prompt_chars (fixed) or
+# Config.passage_prompt_chars (reindexed).
+MAX_PASSAGE_CHARS = 2600
 
 
-def build_prompt(query: str, passages: Sequence[Passage]) -> str:
+def build_prompt(query: str, passages: Sequence[Passage],
+                 max_chars: int = 0) -> str:
     """Render passages as numbered sources. Brand names are NOT stripped here —
     the model sees pages as a real engine would."""
-    block = "\n\n".join(f"[{i}] {p.text[:MAX_PASSAGE_CHARS]}"
+    budget = int(max_chars) or MAX_PASSAGE_CHARS
+    block = "\n\n".join(f"[{i}] {p.text[:budget]}"
                         for i, p in enumerate(passages, 1))
     return GENERATION_PROMPT.format(query=query, sources=block)
+
+
+def prompt_sha256() -> str:
+    """Fingerprint of the frozen prompt template (for the protocol lock)."""
+    import hashlib
+    return hashlib.sha256(GENERATION_PROMPT.encode("utf-8")).hexdigest()

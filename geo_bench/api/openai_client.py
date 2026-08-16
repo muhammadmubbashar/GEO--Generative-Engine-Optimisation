@@ -1,4 +1,5 @@
 """OpenAI-backed provider — the real experiment."""
+import time
 from typing import List, Sequence
 
 from .base import LLMClient
@@ -20,11 +21,28 @@ class OpenAIClient(LLMClient):
     def name(self) -> str:
         return self._gen_model
 
+    def _retry(self, fn, *, attempts: int = 10):
+        from openai import APIConnectionError, APITimeoutError, RateLimitError
+        last = None
+        for i in range(attempts):
+            try:
+                return fn()
+            except (RateLimitError, APITimeoutError, APIConnectionError) as exc:
+                last = exc
+                wait = min(90, 2 ** i)
+                print(f"  [openai retry {i+1}/{attempts} in {wait}s] {exc}",
+                      flush=True)
+                time.sleep(wait)
+        raise last
+
     def embed(self, texts: Sequence[str]) -> List[List[float]]:
         out: List[List[float]] = []
         for i in range(0, len(texts), 100):           # stay inside batch limits
-            resp = self._client.embeddings.create(
-                model=self._embed_model, input=list(texts[i:i + 100]))
+            batch = list(texts[i:i + 100])
+            print(f"  embed {i // 100 + 1}/{(len(texts) + 99) // 100} "
+                  f"({len(batch)} texts)", flush=True)
+            resp = self._retry(lambda b=batch: self._client.embeddings.create(
+                model=self._embed_model, input=b))
             out.extend(d.embedding for d in resp.data)
         return out
 
@@ -38,14 +56,23 @@ class OpenAIClient(LLMClient):
         from openai import BadRequestError
 
         messages = [{"role": "user", "content": prompt}]
-        try:
-            resp = self._client.chat.completions.create(
-                model=self._gen_model, temperature=temperature, top_p=top_p,
-                messages=messages)
-        except BadRequestError as exc:
-            msg = str(exc).lower()
-            if "temperature" not in msg and "top_p" not in msg:
-                raise
-            resp = self._client.chat.completions.create(
+
+        def _call(use_sampling: bool):
+            if use_sampling:
+                return self._client.chat.completions.create(
+                    model=self._gen_model, temperature=temperature, top_p=top_p,
+                    messages=messages)
+            return self._client.chat.completions.create(
                 model=self._gen_model, messages=messages)
+
+        def _once():
+            try:
+                return _call(True)
+            except BadRequestError as exc:
+                msg = str(exc).lower()
+                if "temperature" not in msg and "top_p" not in msg:
+                    raise
+                return _call(False)
+
+        resp = self._retry(_once)
         return resp.choices[0].message.content or ""

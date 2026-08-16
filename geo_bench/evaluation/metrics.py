@@ -96,6 +96,12 @@ def score_arm(arm: str, variant: str, cfg: Config = CONFIG,
                 brands.index(fc) + 1 if fc in brands else None)
             qm = qmeta.get(rec["query_id"], {})
             brand_ranks = rec.get("brand_ranks") or {}
+            # True retrieval order (pre-shuffle): RRF rank for reindexed,
+            # analysis-pool slot for fixed. Falls back to context order for
+            # legacy rows that lack pool_brands.
+            pool_brands = rec.get("pool_brands") or brands
+            retrieval_rank = (
+                pool_brands.index(fc) + 1 if fc in pool_brands else "")
             rows.append({
                 "query_id": rec["query_id"], "group": rec["group"],
                 "stratum": qm.get("stratum") or rec.get("stratum", ""),
@@ -105,6 +111,7 @@ def score_arm(arm: str, variant: str, cfg: Config = CONFIG,
                 "run_id": rec.get("run_id", ""),
                 "retrieval_rate": retrieved,
                 "inclusion": inclusion,
+                "retrieval_rank": retrieval_rank,
                 "position": (cited.index(fc) + 1) if fc in cited else "",
                 "citation_share": round(cited.count(fc) / len(cited), 4) if cited else 0.0,
                 "pawc": round(position_adjusted_word_count(
@@ -112,6 +119,15 @@ def score_arm(arm: str, variant: str, cfg: Config = CONFIG,
                 "fc_context_position": round(sum(ctx) / len(ctx), 2) if ctx else "",
                 "n_brands_retrieved": n_brands,
                 "monopoly_retrieval": int(n_brands == 1),
+                "usable_docs": rec.get("usable_docs", ""),
+                "low_usable": rec.get("low_usable", ""),
+                "route": rec.get("route", ""),
+                "relevance": rec.get("relevance", ""),
+                "accuracy": rec.get("accuracy", ""),
+                "completeness": rec.get("completeness", ""),
+                "clarity": rec.get("clarity", ""),
+                "attribution": rec.get("attribution", ""),
+                "response_quality": rec.get("response_quality", ""),
                 # Conditional / capture metrics (live layer; blank if absent).
                 "p_cited_given_retrieved": (
                     inclusion if retrieved else ""),
@@ -149,17 +165,70 @@ def score_arm(arm: str, variant: str, cfg: Config = CONFIG,
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        w.writeheader(); w.writerows(rows)
-    # Mirror into runs/<run_id>/scores/ when present
+        w.writeheader()
+        w.writerows(rows)
     run_ids = {r.get("run_id") for r in rows if r.get("run_id")}
     for rid in run_ids:
-        run_scores = Path(cfg.runs_dir) / rid / "scores" / f"scores_{arm}_{variant}.csv"
+        run_scores = (Path(cfg.runs_dir) / rid / "scores"
+                      / f"scores_{arm}_{variant}.csv")
         run_scores.parent.mkdir(parents=True, exist_ok=True)
         with run_scores.open("w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
             w.writeheader()
             w.writerows([r for r in rows if r.get("run_id") == rid])
     return rows
+
+
+def _already_judged(rec: Dict) -> bool:
+    rel = rec.get("relevance", "")
+    rq = rec.get("response_quality", "")
+    if rel in ("", None) or rq in ("", None):
+        return False
+    try:
+        return int(rel) in (0, 1, 2) and float(rq) >= 0
+    except (TypeError, ValueError):
+        return False
+
+
+def judge_arm(arm: str, variant: str, cfg: Config = CONFIG,
+              answers_path: Optional[Path] = None) -> List[Dict]:
+    """Mask-verify 100% of answers, then judge one-by-one. Abort on mask fail."""
+    from ..api.base import Passage
+    from .judge import score_answer, verify_all, mask_brands
+
+    answers = Path(answers_path) if answers_path else cfg.resolve_answers_path(
+        arm, variant)
+    recs = [json.loads(l) for l in answers.read_text(encoding="utf-8").splitlines()
+            if l.strip()]
+    verify_all(mask_brands(r.get("answer") or "", cfg) for r in recs)
+    pending = [i for i, r in enumerate(recs) if not _already_judged(r)]
+    print(f"  judge {arm}/{variant}: {len(recs) - len(pending)} already done, "
+          f"{len(pending)} to score", flush=True)
+    for n, i in enumerate(pending, 1):
+        rec = recs[i]
+        sources = [
+            Passage(id=str(j), brand=b, text="", file="")
+            for j, b in enumerate(rec.get("retrieved_brands") or [], 1)
+        ]
+        texts = rec.get("retrieved_texts") or []
+        if texts and len(texts) == len(sources):
+            sources = [
+                Passage(id=str(j), brand=b, text=t, file="")
+                for j, (b, t) in enumerate(
+                    zip(rec["retrieved_brands"], texts), 1)
+            ]
+        judged = score_answer(
+            rec["answer"], sources, rec.get("query") or "", cfg)
+        rec.update(judged)
+        recs[i] = rec
+        answers.write_text(
+            "\n".join(json.dumps(r, ensure_ascii=False) for r in recs) + "\n",
+            encoding="utf-8")
+        qid = rec.get("query_id", "?")
+        print(f"  [{n}/{len(pending)}] {qid} seed={rec.get('seed')} "
+              f"run={rec.get('run')}  rel={judged['relevance']}  "
+              f"RQ={judged['response_quality']}", flush=True)
+    return score_arm(arm, variant, cfg, answers_path=answers)
 
 
 def filter_rows(rows: List[Dict], stratum: Optional[str] = None,
@@ -198,6 +267,16 @@ def summarise(rows: List[Dict]) -> Dict[str, str]:
         "FC context position": f"{sum(ctx) / len(ctx):.1f}" if ctx else "-",
         "monopoly answers": f"{mono}/{n} ({mono / n:.0%})",
     }
+    rel = [float(r["relevance"]) for r in rows if r.get("relevance") not in ("", None)]
+    rq = [float(r["response_quality"]) for r in rows
+          if r.get("response_quality") not in ("", None)]
+    low = sum(int(r.get("low_usable") or 0) for r in rows)
+    if rel:
+        out["relevance (mean)"] = f"{sum(rel) / len(rel):.2f}"
+    if rq:
+        out["response quality"] = f"{sum(rq) / len(rq):.2f}"
+    if any(r.get("low_usable") not in ("", None) for r in rows):
+        out["low_usable answers"] = f"{low}/{n}"
     if given_ret:
         out["P(cited|retrieved)"] = f"{sum(given_ret) / len(given_ret):.0%} (n={len(given_ret)})"
     if given_top3:
@@ -224,7 +303,7 @@ def monopoly_report(rows: List[Dict]) -> str:
         mono = sum(int(r.get("monopoly_retrieval") or 0) for r in rs) / len(rs)
         brands = sum(int(r.get("n_brands_retrieved") or 0) for r in rs) / len(rs)
         stratum = rs[0].get("stratum", "")
-        note = ("COVERAGE MONOPOLY — not a content contest" if mono >= 0.5
+        note = ("COVERAGE MONOPOLY - not a content contest" if mono >= 0.5
                 else "multi-brand contest")
         lines.append(f"{qid:<8}{stratum:<12}{mono:>9.0%}{brands:>8.1f}  {note}")
     return "\n".join(lines)

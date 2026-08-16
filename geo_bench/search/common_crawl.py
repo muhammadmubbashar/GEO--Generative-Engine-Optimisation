@@ -46,7 +46,7 @@ def ensure_cluster_idx(crawl: str) -> Path:
     if dest.exists() and dest.stat().st_size > 1_000_000:
         return dest
     url = f"{DATA}/cc-index/collections/{crawl}/indexes/cluster.idx"
-    print(f"  [cc-idx] downloading cluster.idx for {crawl} …", flush=True)
+    print(f"  [cc-idx] downloading cluster.idx for {crawl} ...", flush=True)
     with requests.get(url, stream=True, timeout=600) as resp:
         resp.raise_for_status()
         tmp = dest.with_suffix(".partial")

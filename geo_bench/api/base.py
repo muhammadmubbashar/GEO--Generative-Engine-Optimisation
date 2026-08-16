@@ -6,7 +6,10 @@ from typing import List, Sequence
 
 @dataclass
 class Passage:
-    """One retrieved chunk of a page — the unit that competes for citation."""
+    """One source in the generation prompt.
+
+    `fixed`: cleaned full page. `reindexed`: one 350-word chunk.
+    """
     id: str
     brand: str
     text: str

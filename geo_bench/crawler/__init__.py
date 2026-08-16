@@ -1,15 +1,24 @@
-"""Acquire and freeze the corpus.
+"""Fetch QC for the frozen live pool.
 
-The corpus defines the population every later number is drawn from, and it is
-the only irreversible stage in the project. Four responsibilities:
-
-    discovery  find every candidate page a brand has, per page type
-    coverage   record sought-vs-found, so an absence is evidenced not assumed
-    fetcher    download exactly as an AI crawler sees it, then freeze
-    quality    distinguish a genuinely empty page from a failed fetch
+The old four-brand sitemap corpus has been retired. Pages now come from the
+Brave freeze under runs/<RUN_ID>/.
 """
-from .fetcher import Fetcher
-from .coverage import CoverageGrid
-from .quality import QualityReport
+from .quality import (
+    FETCH_METHODS,
+    FreezeQCReport,
+    canonical_fetch_method,
+    is_usable,
+    needs_review,
+    qc_fields,
+    run_freeze_qc,
+)
 
-__all__ = ["Fetcher", "CoverageGrid", "QualityReport"]
+__all__ = [
+    "FETCH_METHODS",
+    "FreezeQCReport",
+    "canonical_fetch_method",
+    "is_usable",
+    "needs_review",
+    "qc_fields",
+    "run_freeze_qc",
+]

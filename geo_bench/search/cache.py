@@ -29,7 +29,7 @@ class SearchCache:
         for d in (self.search_dir, self.page_dir, self.fanout_dir):
             d.mkdir(parents=True, exist_ok=True)
         if refresh:
-            print("WARNING: --refresh set — bypassing live-search cache "
+            print("WARNING: --refresh set - bypassing live-search cache "
                   "(results will NOT match a prior freeze).")
 
     # ---- search responses ---------------------------------------------

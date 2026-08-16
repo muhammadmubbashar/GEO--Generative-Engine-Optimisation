@@ -25,6 +25,13 @@ from ..config import CONFIG, Config
 from .prompts import build_prompt
 
 
+def prompt_char_budget(variant: str, cfg: Config = CONFIG) -> int:
+    """fixed = whole page; reindexed = one retrieved chunk."""
+    if variant == "fixed":
+        return int(cfg.page_prompt_chars)
+    return int(cfg.passage_prompt_chars)
+
+
 @dataclass
 class GenerationRecord:
     query_id: str
@@ -38,6 +45,8 @@ class GenerationRecord:
     model: str
     retrieved_brands: List[str]
     retrieved_ids: List[str]
+    # Texts in the exact order the model saw them ([n] == retrieved_texts[n-1]).
+    retrieved_texts: List[str]
     fc_context_positions: List[int]
     cited_indices: List[int]
     cited_brands: List[str]
@@ -76,7 +85,8 @@ class Generator:
         if arm == "position_control":
             ordered = force_first(ordered, self.cfg.our_brand)
 
-        prompt = build_prompt(query_row["query"], ordered)
+        prompt = build_prompt(query_row["query"], ordered,
+                              max_chars=prompt_char_budget(variant, self.cfg))
         answer = self._client.generate(prompt, self.cfg.temperature, self.cfg.top_p)
 
         cited = [int(n) for n in re.findall(r"\[(\d+)\]", answer)
@@ -91,6 +101,7 @@ class Generator:
             seed=seed, run=run, model=self._client.name,
             retrieved_brands=brands,
             retrieved_ids=[p.id for p in ordered],
+            retrieved_texts=[p.text for p in ordered],
             fc_context_positions=[i for i, p in enumerate(ordered, 1)
                                   if p.brand == self.cfg.our_brand],
             cited_indices=cited,

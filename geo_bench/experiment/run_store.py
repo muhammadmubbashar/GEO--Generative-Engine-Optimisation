@@ -1,12 +1,13 @@
 """Per-run artefact layout under runs/<RUN_ID>/."""
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import time
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional  # noqa: F401 — Optional used in write_page
+from typing import Any, Dict, List, Optional
 
 from ..config import CONFIG, Config
 
@@ -84,13 +85,14 @@ class RunStore:
             "embed_model": cfg.embed_model,
             "seeds": list(cfg.seeds),
             "runs_per_query": cfg.runs_per_query,
-            "primary_endpoints": ["pawc", "citation_share"],
+            "primary_endpoints": list(cfg.primary_endpoints),
+            "secondary_endpoints": list(cfg.secondary_endpoints),
             "config": config_snapshot(cfg),
         }
         store.write_json(store.root / "metadata.json", meta)
         print(f"  RUN_ID={run_id}")
         if refresh:
-            print("  WARNING: --refresh set — new freeze; not comparable to "
+            print("  WARNING: --refresh set - new freeze; not comparable to "
                   "prior RUN_ID without re-baselining.")
         return store
 
@@ -176,10 +178,67 @@ class RunStore:
             n += 1
         return n
 
-    def verify_frozen_pages(self, urls: List[str]) -> None:
-        """Raise if any frozen competitor/FC page hash drifted."""
+    def iter_page_metas(self) -> List[Dict[str, Any]]:
+        rows: List[Dict[str, Any]] = []
+        for meta_path in sorted(self.pages_dir.glob("*/meta.json")):
+            rows.append(json.loads(meta_path.read_text(encoding="utf-8")))
+        return rows
+
+    def manifest_path(self) -> Path:
+        return self.root / "manifest.csv"
+
+    def write_manifest(self) -> Path:
+        """SHA-256 freeze ledger: every page, word count, fetch method, QC flags."""
+        from ..crawler.quality import canonical_fetch_method, is_usable, needs_review
+
+        rows: List[Dict[str, Any]] = []
+        for meta in self.iter_page_metas():
+            words = int(meta.get("words") or 0)
+            method = canonical_fetch_method(
+                str(meta.get("method") or ""),
+                kind=str(meta.get("live_kind") or ""),
+                words=words, cfg=self.cfg)
+            rows.append({
+                "url": meta.get("url") or "",
+                "brand": meta.get("brand") or "",
+                "words": words,
+                "method": method,
+                "needs_review": int(needs_review(words, self.cfg)),
+                "usable": int(is_usable(words, method, self.cfg)),
+                "http_status": meta.get("http_status", ""),
+                "fetched_at": meta.get("fetched_at") or "",
+                "sha256": meta.get("sha256") or "",
+                "clean_sha256": meta.get("clean_sha256") or "",
+            })
+        path = self.manifest_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fields = ["url", "brand", "words", "method", "needs_review", "usable",
+                  "http_status", "fetched_at", "sha256", "clean_sha256"]
+        with path.open("w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=fields)
+            w.writeheader()
+            w.writerows(rows)
+        return path
+
+    def verify_frozen_pages(self, urls: Optional[List[str]] = None) -> None:
+        """Re-hash every freeze page. Any mismatch raises — not a warning."""
         bad: List[str] = []
-        for url in urls:
+        manifest = self.manifest_path()
+        if urls:
+            targets = list(urls)
+        else:
+            targets = [m.get("url") or "" for m in self.iter_page_metas()]
+            if manifest.exists():
+                for row in csv.DictReader(manifest.open(encoding="utf-8")):
+                    u = (row.get("url") or "").strip()
+                    if u and u not in targets:
+                        targets.append(u)
+
+        seen: set = set()
+        for url in targets:
+            if not url or url in seen:
+                continue
+            seen.add(url)
             d = self.page_dir(url)
             meta_path = d / "meta.json"
             raw_path = d / "raw.html"
@@ -188,16 +247,58 @@ class RunStore:
                 continue
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
             digest = hashlib.sha256(raw_path.read_bytes()).hexdigest()
-            if digest != meta.get("sha256"):
-                bad.append(f"CHANGED {url} (stored={meta.get('sha256')[:12]} "
-                           f"now={digest[:12]})")
+            stored = meta.get("sha256") or ""
+            if digest != stored:
+                bad.append(
+                    f"CHANGED {url} (stored={stored[:12]} now={digest[:12]})")
+            clean_path = d / "clean.txt"
+            if clean_path.exists() and meta.get("clean_sha256"):
+                cdig = hashlib.sha256(clean_path.read_bytes()).hexdigest()
+                if cdig != meta.get("clean_sha256"):
+                    bad.append(f"CLEAN-CHANGED {url}")
+
+        if manifest.exists():
+            by_url = {r["url"]: r for r in csv.DictReader(
+                manifest.open(encoding="utf-8")) if r.get("url")}
+            for url in seen:
+                row = by_url.get(url)
+                if row is None:
+                    continue
+                meta_path = self.page_dir(url) / "meta.json"
+                if not meta_path.exists():
+                    continue
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                if row.get("sha256") and meta.get("sha256") != row["sha256"]:
+                    bad.append(f"MANIFEST-MISMATCH {url}")
+
         if bad:
             raise RuntimeError(
-                "Frozen pool hash verification FAILED — competitor/page drift "
-                "detected. Do not compare arms against this freeze.\n  "
-                + "\n  ".join(bad[:20])
-                + (f"\n  ... and {len(bad) - 20} more" if len(bad) > 20 else "")
+                "HASH VERIFICATION FAILED - freeze pages have changed. "
+                "Stop. Do not run or score this experiment.\n  "
+                + "\n  ".join(bad[:30])
+                + (f"\n  ... and {len(bad) - 30} more" if len(bad) > 30 else "")
             )
+
+    def set_active(self) -> Path:
+        path = Path(self.cfg.active_run_file)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(self.run_id + "\n", encoding="utf-8")
+        return path
+
+    @classmethod
+    def resolve(cls, run_id: Optional[str] = None,
+                cfg: Config = CONFIG) -> "RunStore":
+        rid = (run_id or "").strip()
+        if not rid:
+            active = Path(cfg.active_run_file)
+            if active.exists():
+                rid = active.read_text(encoding="utf-8").strip()
+        if not rid:
+            raise RuntimeError(
+                "No freeze RUN_ID. Pass --from-run <RUN_ID> or run "
+                "`geo freeze-live` / `geo lock --from-run` first "
+                f"(expected {cfg.active_run_file}).")
+        return cls.open(rid, cfg)
 
     def write_generation(self, arm: str, query_id: str, run: int,
                          seed: int, payload: Dict[str, Any]) -> Path:

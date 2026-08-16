@@ -1,8 +1,8 @@
-"""Live web-search retrieval layer (Aggarwal-style generation-stage pool).
+"""Brave freeze → frozen live pool → fixed / reindexed retrieval.
 
-Local fixed/reindexed variants are unchanged. This package builds a candidate
-Passage list from live search so downstream generation/metrics stay identical.
+The old four-brand sitemap corpus is retired. Generation-stage candidates
+come from the freeze under runs/<RUN_ID>/ only.
 """
-from .live_retriever import LivePool, LiveRetriever
+from .live_retriever import LivePool, LiveRetriever, page_source
 
-__all__ = ["LiveRetriever", "LivePool"]
+__all__ = ["LiveRetriever", "LivePool", "page_source"]

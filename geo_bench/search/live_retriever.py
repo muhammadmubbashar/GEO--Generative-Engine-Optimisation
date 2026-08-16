@@ -1,10 +1,12 @@
-"""Orchestrate fan-out → live search → freeze → one Passage per analysed doc."""
+"""Orchestrate fan-out → live search → freeze → one full page per analysed doc.
+
+The `fixed` generation pool is Aggarwal / C-SEO / AutoGEO: cleaned page text,
+not a BM25-best 350-word slice. Chunking stays on the `reindexed` index only.
+"""
 from __future__ import annotations
 
-import csv
 import hashlib
 import json
-import gzip
 import time
 import urllib.parse
 import urllib.robotparser
@@ -13,13 +15,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 import requests
-from rank_bm25 import BM25Okapi
 
 from ..api.base import Passage
-from ..api.offline_client import tokenize
 from ..config import CONFIG, Config
-from ..crawler.fetcher import Fetcher
-from ..retrieval.chunker import split_text
+from ..crawler.quality import qc_fields
 from ..retrieval.cleaner import clean_html
 from .base import SearchResult
 from .cache import SearchCache
@@ -68,18 +67,12 @@ def domain_of(url: str) -> str:
     return host
 
 
-def _best_chunk(text: str, query: str, cfg: Config) -> str:
-    chunks = split_text(text, cfg)
-    if not chunks:
-        return ""
-    if len(chunks) == 1:
-        return chunks[0]
-    tokenized = [tokenize(c) for c in chunks]
-    if not any(tokenized):
-        return chunks[0]
-    bm25 = BM25Okapi(tokenized)
-    scores = bm25.get_scores(tokenize(query))
-    return chunks[int(scores.argmax())]
+def page_source(clean: str, fallback: str = "") -> str:
+    """Cleaned full page for the `fixed` pool; snippet only if the page is empty."""
+    text = (clean or "").strip()
+    if text:
+        return text
+    return (fallback or "")[:500]
 
 
 @dataclass
@@ -154,10 +147,16 @@ class LiveRetriever:
                  store: Optional["RunStore"] = None):
         self.cfg = cfg
         self.cache = SearchCache(cfg, refresh=refresh)
-        self.search = get_search_client(cfg)
-        self.fetcher = Fetcher(cfg, delay=0.25)
+        self._search = None
         self.store = store
         self._robots_cache: Dict[str, Optional[urllib.robotparser.RobotFileParser]] = {}
+
+    @property
+    def search(self):
+        """Lazy: freeze replay (pool_from_freeze) must not need BRAVE_API_KEY."""
+        if self._search is None:
+            self._search = get_search_client(self.cfg)
+        return self._search
 
     def _robots_allowed(self, url: str) -> bool:
         """robots.txt check using the same live fetch UA as page gets."""
@@ -264,15 +263,15 @@ class LiveRetriever:
 
     def _passage_from_text(self, url: str, brand: str, text: str,
                            fallback: str) -> Passage:
-        chunk = text.strip()
-        if not chunk:
-            chunk = fallback[:500]
-        digest = hashlib.sha1(chunk.encode("utf-8")).hexdigest()[:8]
+        page = text.strip()
+        if not page:
+            page = fallback[:500]
+        digest = hashlib.sha1(page.encode("utf-8")).hexdigest()[:8]
         url_key = hashlib.sha1(normalise_url(url).encode()).hexdigest()[:12]
         return Passage(
             id=f"{brand}:{url_key}:0:{digest}",
-            brand=brand, text=chunk, file=url,
-            words=len(chunk.split()),
+            brand=brand, text=page, file=url,
+            words=len(page.split()),
         )
 
     def freeze_query(self, query_id: str, query: str,
@@ -300,33 +299,39 @@ class LiveRetriever:
             })
 
         analysis = capture[: self.cfg.search_analysis_depth]
-        # Fetch + clean only analysis-depth pages (generation pool).
+        # Fetch + QC every captured URL (top-20). Analysis pool stays k=10.
         passages: List[Passage] = []
         page_logs: List[Dict] = []
-        for r in analysis:
+        for r in capture:
             brand = brand_for_url(r.url, self.cfg)
             html, status, method, fextra = self._fetch_html(r.url)
             body, jsonld = clean_html(html)
             clean = (body + " " + jsonld).strip()
-            content_ok = bool(fextra.get("content_ok"))
+            words = len(clean.split())
+            extra = {**fextra, "brand": brand, **qc_fields(
+                words, method, kind=str(fextra.get("live_kind") or ""),
+                cfg=self.cfg)}
+            method = extra["method"]
             store.write_page(
                 r.url, html, clean, http_status=status, method=method,
-                extra=fextra)
-            chunk = _best_chunk(clean, query, self.cfg) if clean else ""
-            if not chunk:
-                chunk = (r.snippet or r.title or r.url)[:500]
-            passages.append(self._passage_from_text(
-                r.url, brand, chunk, r.snippet or r.title or r.url))
-            page_logs.append({
+                extra=extra)
+            log = {
                 "url": r.url, "brand": brand, "http_status": status,
-                "method": method, "content_ok": content_ok,
-                "words": len(clean.split()),
-                "fetch_user_agent": fextra.get("fetch_user_agent"),
-                "fallback": bool(fextra.get("fallback")),
-                "fallback_corpus_url": fextra.get("fallback_corpus_url"),
-                "fallback_corpus_fetched_at": fextra.get(
-                    "fallback_corpus_fetched_at"),
-            })
+                "method": method, "content_ok": extra["content_ok"],
+                "needs_review": extra["needs_review"],
+                "words": words,
+                "fetch_user_agent": extra.get("fetch_user_agent"),
+                "fallback": bool(extra.get("fallback")),
+                "fallback_cc_url": extra.get("fallback_cc_url"),
+                "fallback_cc_index": extra.get("fallback_cc_index"),
+                "fallback_cc_timestamp": extra.get("fallback_cc_timestamp"),
+            }
+            page_logs.append(log)
+            if r in analysis:
+                page = page_source(
+                    clean, r.snippet or r.title or r.url)
+                passages.append(self._passage_from_text(
+                    r.url, brand, page, r.snippet or r.title or r.url))
 
         fc_positions = [row["position"] for row in capture_rows
                         if row["brand"] == self.cfg.our_brand]
@@ -355,6 +360,7 @@ class LiveRetriever:
             "fc_in_capture": fc_in_capture,
             "fc_search_rank": fc_search_rank,
             "results": capture_rows,
+            "capture_urls": [r.url for r in capture],
             "analysis_urls": [r.url for r in analysis],
         })
 
@@ -415,11 +421,10 @@ class LiveRetriever:
                 content_ok = self._classify_html(
                     page.get("html") or "",
                     int(page.get("http_status") or 0)) == "ok"
-            chunk = _best_chunk(clean, query, self.cfg) if clean else ""
-            if not chunk:
-                chunk = (row.get("snippet") or row.get("title") or url)[:500]
+            page = page_source(
+                clean, row.get("snippet") or row.get("title") or url)
             passages.append(self._passage_from_text(
-                url, brand, chunk, row.get("snippet") or url))
+                url, brand, page, row.get("snippet") or url))
             urls.append(url)
             ranks.append(int(row.get("rank") or 0))
             brands.append(brand)
@@ -500,11 +505,9 @@ class LiveRetriever:
                 html, status, method, fextra = self._fetch_html(r.url)
                 body, jsonld = clean_html(html)
                 text = (body + " " + jsonld).strip()
-                chunk = _best_chunk(text, query, self.cfg) if text else ""
-                if not chunk:
-                    chunk = (r.snippet or r.title or r.url)[:500]
+                page = page_source(text, r.snippet or r.title or r.url)
                 passages.append(self._passage_from_text(
-                    r.url, brand, chunk, r.snippet or r.title or r.url))
+                    r.url, brand, page, r.snippet or r.title or r.url))
                 if self.store is not None:
                     self.store.write_page(
                         r.url, html, text, http_status=status, method=method,
@@ -575,58 +578,19 @@ class LiveRetriever:
             return "thin"
         return "ok"
 
-    def _corpus_fallback(self, url: str) -> Optional[Dict[str, str]]:
-        """Exact-URL corpus match only. Soft/path matching is forbidden."""
-        manifest = self.cfg.corpus_dir / "manifest_baseline.csv"
-        if not manifest.exists():
-            return None
-        key = normalise_url(url)
-        for row in csv.DictReader(manifest.open(encoding="utf-8")):
-            u = (row.get("url") or "").strip()
-            if not u or u.upper() == "NONE":
-                continue
-            if normalise_url(u) != key:
-                continue
-            path = Path(row["file"])
-            if not path.exists():
-                path = self.cfg.corpus_dir / "baseline" / row.get(
-                    "brand", "") / Path(row["file"]).name
-            if not path.exists():
-                return None
-            return {
-                "html": path.read_text(encoding="utf-8", errors="replace"),
-                "corpus_url": u,
-                "corpus_path": str(path),
-                "corpus_fetched_at": (row.get("fetched_at") or "").strip(),
-                "corpus_method": (row.get("method") or "").strip(),
-            }
-        return None
-
     def _log_fallback(self, record: Dict, kind: str) -> None:
         path = self.cfg.results_dir / "corpus_fallback_log.jsonl"
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(record, ensure_ascii=False) + "\n")
-        if kind == "corpus":
-            print(
-                "  [corpus-fallback EXACT-URL] "
-                f"live={record['live_url']}  corpus={record['corpus_url']}  "
-                f"live_fetch={record['live_fetched_at']}  "
-                f"corpus_capture={record['corpus_fetched_at'] or 'UNKNOWN'}  "
-                "NOTE: corpus capture date may differ from live freeze — confound."
-            )
-        else:
-            print(
-                "  [common-crawl EXACT-URL] "
-                f"live={record['live_url']}  "
-                f"crawl={record.get('cc_index')}  "
-                f"capture={record.get('cc_timestamp')}  "
-                f"words≈{record.get('words', '?')}  "
-                "NOTE: archive capture date may differ from live freeze — confound."
-            )
-
-    def _log_corpus_fallback(self, record: Dict) -> None:
-        self._log_fallback(record, "corpus")
+        print(
+            "  [common-crawl EXACT-URL] "
+            f"live={record['live_url']}  "
+            f"crawl={record.get('cc_index')}  "
+            f"capture={record.get('cc_timestamp')}  "
+            f"words≈{record.get('words', '?')}  "
+            "NOTE: archive capture date may differ from live freeze — confound."
+        )
 
     def _cc_session(self) -> requests.Session:
         if not hasattr(self, "_cc_sess") or self._cc_sess is None:
@@ -701,7 +665,7 @@ class LiveRetriever:
                 "Cache-Control": "no-cache",
                 "Upgrade-Insecure-Requests": "1",
             })
-            time.sleep(self.fetcher.delay)
+            time.sleep(self.cfg.live_fetch_delay_seconds)
             return resp.text or "", resp.status_code
         except Exception as exc:
             print(f"  [FAILED] {url}: {exc}")
@@ -711,8 +675,9 @@ class LiveRetriever:
                     ) -> Tuple[str, int, str, Dict]:
         """Plain HTTP with the single configured UA for every brand.
 
-        Exact-URL corpus fallback only when live fetch is unusable.
-        Returns (html, status, method, fetch_extra).
+        Exact-URL Common Crawl fallback only when live fetch is unusable.
+        Returns (html, status, method, fetch_extra). Method is one of
+        browser-ua · common-crawl · bot-walled · unobtainable.
         """
         ua = self.cfg.live_fetch_user_agent
         live_fetched_at = time.strftime("%Y-%m-%dT%H:%M:%S")
@@ -729,100 +694,44 @@ class LiveRetriever:
                 status = int(cached.get("http_status") or 0)
                 method = cached.get("method") or "cache"
                 cached_ua = cached.get("fetch_user_agent") or ""
-                # Reject mixed-UA or soft-fallback cache from earlier freezes.
                 ua_ok = cached_ua == ua
                 method_ok = method in (
-                    "browser-ua",
-                    "corpus-fallback-exact-url",
-                    "common-crawl-exact-url",
-                    "cache",
+                    "browser-ua", "common-crawl", "common-crawl-exact-url",
+                    "cache", "manual-view-source",
                 )
                 kind = self._classify_html(html, status)
                 if kind == "ok" and ua_ok and method_ok:
                     extra["content_ok"] = True
                     extra["fetch_user_agent"] = ua
-                    if method in (
-                        "corpus-fallback-exact-url",
-                        "common-crawl-exact-url",
-                    ):
+                    extra["live_kind"] = "ok"
+                    if method in ("common-crawl", "common-crawl-exact-url"):
                         extra["fallback"] = True
+                        method = "common-crawl"
                         for k in (
-                            "fallback_corpus_url",
-                            "fallback_corpus_fetched_at",
-                            "fallback_cc_url",
-                            "fallback_cc_index",
+                            "fallback_cc_url", "fallback_cc_index",
                             "fallback_cc_timestamp",
                         ):
                             if cached.get(k):
                                 extra[k] = cached[k]
+                    else:
+                        method = "browser-ua" if method == "cache" else method
+                    extra["live_kind"] = kind
                     return html, status, method, extra
                 why = (f"{kind}" if kind != "ok" else
                        ("ua-mismatch" if not ua_ok else "stale-method"))
                 print(f"  [refetch] cached page is {why}: {url}")
 
-        # Identical browser UA for FC, Skyscanner, Webjet, Expedia, other.
         html, status = self._http_get(url, ua)
         kind = self._classify_html(html, status)
-        method = "browser-ua"
+        extra["live_kind"] = kind
         if kind == "ok":
             extra["content_ok"] = True
-            self.cache.put_page(url, html, status=status, method=method,
+            self.cache.put_page(url, html, status=status, method="browser-ua",
                                 fetch_user_agent=ua)
-            return html, status, method, extra
+            return html, status, "browser-ua", extra
 
         print(f"  [live-fetch] {kind} status={status} for {url}")
 
-        # Exact-URL corpus fallback only (documented capture-date confound).
-        fb = self._corpus_fallback(url)
-        if fb is not None:
-            kind2 = self._classify_html(fb["html"], 200)
-            if kind2 == "ok":
-                # Guard: normalised URLs must be identical (never soft-match).
-                if normalise_url(url) != normalise_url(fb["corpus_url"]):
-                    raise AssertionError(
-                        "corpus fallback URL mismatch: "
-                        f"live={url!r} corpus={fb['corpus_url']!r}")
-                log = {
-                    "live_url": url,
-                    "corpus_url": fb["corpus_url"],
-                    "corpus_path": fb["corpus_path"],
-                    "live_fetched_at": live_fetched_at,
-                    "live_http_status": status,
-                    "live_kind": kind,
-                    "corpus_fetched_at": fb["corpus_fetched_at"],
-                    "corpus_method": fb["corpus_method"],
-                    "fetch_user_agent": ua,
-                    "note": ("Corpus HTML substituted for bot-walled/thin live "
-                             "fetch; capture dates may differ — confound."),
-                }
-                self._log_corpus_fallback(log)
-                extra.update({
-                    "content_ok": True,
-                    "fallback": True,
-                    "fallback_live_url": url,
-                    "fallback_corpus_url": fb["corpus_url"],
-                    "fallback_corpus_fetched_at": fb["corpus_fetched_at"],
-                    "fallback_corpus_path": fb["corpus_path"],
-                    "live_http_status": status,
-                    "live_kind": kind,
-                })
-                self.cache.put_page(
-                    url, fb["html"], status=200,
-                    method="corpus-fallback-exact-url",
-                    fetch_user_agent=ua)
-                # Persist fallback URLs/dates on the cache record too.
-                cpath = self.cache.page_path(url)
-                crec = json.loads(cpath.read_text(encoding="utf-8"))
-                crec.update({
-                    "fallback_corpus_url": fb["corpus_url"],
-                    "fallback_corpus_fetched_at": fb["corpus_fetched_at"],
-                    "live_fetched_at": live_fetched_at,
-                })
-                cpath.write_text(json.dumps(crec, ensure_ascii=False),
-                                 encoding="utf-8")
-                return fb["html"], 200, "corpus-fallback-exact-url", extra
-
-        # Exact-URL Common Crawl archive (public web crawl; dated confound).
         cc = self._common_crawl_fallback(url)
         if cc is not None:
             log = {
@@ -852,8 +761,7 @@ class LiveRetriever:
                 "live_kind": kind,
             })
             self.cache.put_page(
-                url, cc["html"], status=200,
-                method="common-crawl-exact-url",
+                url, cc["html"], status=200, method="common-crawl",
                 fetch_user_agent=ua)
             cpath = self.cache.page_path(url)
             crec = json.loads(cpath.read_text(encoding="utf-8"))
@@ -865,10 +773,10 @@ class LiveRetriever:
             })
             cpath.write_text(json.dumps(crec, ensure_ascii=False),
                              encoding="utf-8")
-            return cc["html"], 200, "common-crawl-exact-url", extra
+            return cc["html"], 200, "common-crawl", extra
 
-        # Keep unusable shell — finding, not silent drop.
-        method = f"browser-ua-{kind}"
+        # Keep unusable shell — finding, not silent drop. Do not auto-exclude.
+        method = "bot-walled" if kind == "bot-wall" else "unobtainable"
         extra.update({"content_ok": False, "live_kind": kind})
         self.cache.put_page(url, html, status=status, method=method,
                             fetch_user_agent=ua)
@@ -876,7 +784,7 @@ class LiveRetriever:
 
     def repair_store_pages(self, store: "RunStore",
                            brands: Optional[List[str]] = None) -> Dict[str, int]:
-        """Re-fetch thin/bot-walled pages; fill via corpus/Common Crawl."""
+        """Re-fetch thin/bot-walled pages; fill via exact-URL Common Crawl."""
         target = set(brands or ["*"])
         stats = {"checked": 0, "repaired": 0, "still_thin": 0,
                  "by_method": {}}
@@ -943,41 +851,9 @@ class LiveRetriever:
 
     def _archive_fill(self, url: str, *, live_kind: str
                       ) -> Optional[Tuple[str, int, str, Dict]]:
-        """Exact-URL corpus then Common Crawl; no live HTTP."""
+        """Exact-URL Common Crawl only; no live HTTP, no old corpus."""
         ua = self.cfg.live_fetch_user_agent
         live_fetched_at = time.strftime("%Y-%m-%dT%H:%M:%S")
-        fb = self._corpus_fallback(url)
-        if fb is not None and self._classify_html(fb["html"], 200) == "ok":
-            if normalise_url(url) != normalise_url(fb["corpus_url"]):
-                raise AssertionError(
-                    "corpus fallback URL mismatch: "
-                    f"live={url!r} corpus={fb['corpus_url']!r}")
-            log = {
-                "live_url": url,
-                "corpus_url": fb["corpus_url"],
-                "corpus_path": fb["corpus_path"],
-                "live_fetched_at": live_fetched_at,
-                "live_kind": live_kind,
-                "corpus_fetched_at": fb["corpus_fetched_at"],
-                "corpus_method": fb["corpus_method"],
-                "fetch_user_agent": ua,
-                "note": ("Corpus HTML substituted for bot-walled/thin live "
-                         "fetch; capture dates may differ — confound."),
-            }
-            self._log_corpus_fallback(log)
-            extra = {
-                "fetch_user_agent": ua,
-                "content_ok": True,
-                "fallback": True,
-                "fallback_live_url": url,
-                "fallback_corpus_url": fb["corpus_url"],
-                "fallback_corpus_fetched_at": fb["corpus_fetched_at"],
-                "fallback_corpus_path": fb["corpus_path"],
-                "live_kind": live_kind,
-                "live_fetched_at": live_fetched_at,
-            }
-            return fb["html"], 200, "corpus-fallback-exact-url", extra
-
         cc = self._common_crawl_fallback(url)
         if cc is not None:
             log = {
@@ -1006,7 +882,7 @@ class LiveRetriever:
                 "live_kind": live_kind,
                 "live_fetched_at": live_fetched_at,
             }
-            return cc["html"], 200, "common-crawl-exact-url", extra
+            return cc["html"], 200, "common-crawl", extra
         return None
 
     def _refresh_retrieval_coverage(self, store: "RunStore") -> None:
@@ -1044,66 +920,15 @@ class LiveRetriever:
             store.write_json(rpath, data)
 
     def substitute_fc(self, pool: LivePool, arm: str) -> LivePool:
+        """Swap FC passage text only. Competitor bytes never change.
+
+        Optimisation arms are not built in this baseline-lock pass: any
+        non-baseline arm without freeze arm pages raises loudly.
+        """
         if arm == "baseline":
             return pool
-        arm_map = _load_arm_fc_text_by_url(arm, self.cfg)
-        new_passages: List[Passage] = []
-        for p in pool.passages:
-            if p.brand != self.cfg.our_brand:
-                new_passages.append(p)
-                continue
-            opt = arm_map.get(normalise_url(p.file))
-            if opt is None:
-                print(f"  [live] no optimised text for FC url={p.file} "
-                      f"arm={arm}; keeping live baseline text")
-                new_passages.append(p)
-                continue
-            chunk = _best_chunk(opt, pool.fanout_queries[0], self.cfg) or opt
-            new_passages.append(self._passage_from_text(
-                p.file, p.brand, chunk, chunk))
-        return LivePool(
-            passages=new_passages,
-            fanout_queries=pool.fanout_queries,
-            retrieved_urls=pool.retrieved_urls,
-            retrieved_ranks=pool.retrieved_ranks,
-            retrieved_brands=pool.retrieved_brands,
-            fc_present=pool.fc_present,
-            fc_search_rank=pool.fc_search_rank,
-            fc_in_capture=pool.fc_in_capture,
-            n_distinct_domains=pool.n_distinct_domains,
-            search_captured_at=pool.search_captured_at,
-            hit_counts=pool.hit_counts,
-            capture_results=pool.capture_results,
-            brand_ranks=pool.brand_ranks,
-            brands_usable=pool.brands_usable,
-            brands_missing_usable=pool.brands_missing_usable,
-            page_fetch_log=pool.page_fetch_log,
-            fetch_user_agent=pool.fetch_user_agent,
-            analysis_depth=pool.analysis_depth,
-            capture_depth=pool.capture_depth,
+        raise RuntimeError(
+            f"FC substitution for arm={arm!r} is not available: the "
+            "optimisation module is not part of baseline lock. Run baseline "
+            "only until arm freeze pages exist under runs/<RUN_ID>/arms/<arm>/."
         )
-
-
-def _load_arm_fc_text_by_url(arm: str, cfg: Config) -> Dict[str, str]:
-    out: Dict[str, str] = {}
-    manifest = cfg.corpus_dir / "manifest_baseline.csv"
-    if not manifest.exists():
-        return out
-    arm_fc = cfg.corpus_dir / arm / cfg.our_brand
-    if not arm_fc.is_dir():
-        return out
-    for row in csv.DictReader(manifest.open(encoding="utf-8")):
-        if row.get("brand", "").strip() != cfg.our_brand:
-            continue
-        url = row.get("url", "").strip()
-        if not url or url.upper() == "NONE":
-            continue
-        arm_path = arm_fc / Path(row["file"]).name
-        if not arm_path.exists():
-            continue
-        body, jsonld = clean_html(
-            arm_path.read_text(encoding="utf-8", errors="ignore"))
-        text = (body + " " + jsonld).strip()
-        if text:
-            out[normalise_url(url)] = text
-    return out
