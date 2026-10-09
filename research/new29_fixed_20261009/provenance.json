@@ -1,0 +1,17 @@
+{
+  "experiment_id": "60d9380afe4cf422df3d8a0acab5c8402fea2cd73e42869d2b8277d9503f8704",
+  "selected_final_id": "777cb845c2599aff5d2ea693892828455131bce8fedbe8f6f515d74e5800ce36",
+  "model_requested": "gpt-5.6-luna",
+  "verified_records": 580,
+  "generation_interruption": "Credit exhaustion after 320 saved answers; resumed only missing answers under the same lock.",
+  "publication_scope": "Citation indicator data and statistical reproduction only. Raw contexts, third-party page text, prompts and provider responses are not published. This package cannot independently re-audit citation-to-source mapping or regenerate the full experiment.",
+  "sha256": {
+    "citation_outcomes.csv": "563e728b71e0627778448cd9b2758d77f813e8911b3320e7e20abb59cf628259",
+    "PROTOCOL.md": "75c5897f0b91eef1761b34d94c93fa9b1980d376e611866c828541faa1589bea",
+    "queries.csv": "147c8486f7535d3a110fc0c0c5c979778e35ba66ea62d20cac2f93f5c3824f9b",
+    "README.md": "94b69a7e8ff29ec6cbf15f9f634a91e712b36cf0b2f57c1ba53d4232f6acf6f1",
+    "reproduce_statistics.py": "dca93ddabeaa6bd7d2db3dbc67e1d05ccf5ac68a59f897c88d60cf0fa299a2a9",
+    "statistics.json": "3b55ab9a062ae787aae1bc4cffd2de0eef20451ef0459efccda44229b9b2dd8f"
+  },
+  "checksum_encoding": "SHA-256 of UTF-8 file bytes after normalising CRLF to LF, to support Git line-ending conversion"
+}
