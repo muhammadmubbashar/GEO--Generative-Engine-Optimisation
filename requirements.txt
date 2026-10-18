@@ -1,9 +1,0 @@
-# Core pipeline
-requests>=2.31
-beautifulsoup4>=4.12
-numpy>=1.26
-rank-bm25>=0.2.2
-
-# Real LLM providers (needed once mode != "offline" in geo_bench/config.py)
-openai>=1.40          # generation in openai mode; embeddings in BOTH online modes
-anthropic>=0.34       # generation in anthropic (Claude) mode

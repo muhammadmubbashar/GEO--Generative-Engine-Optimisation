@@ -1,16 +1,7 @@
-﻿# Local / generated data
-cache/
-runs/
-results/
-corpus/
-manual_saves/
-
-# Python
 __pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
+*.pyc
 .env
-.pytest_cache/
-pytest-cache-files-*/
+.env.*
+*.key
+*.pem
+*.zip

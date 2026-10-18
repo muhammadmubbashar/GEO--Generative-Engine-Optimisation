@@ -1,0 +1,207 @@
+{
+  "question_counts": {
+    "Q01": [
+      3,
+      4,
+      4,
+      10
+    ],
+    "Q02": [
+      3,
+      6,
+      2,
+      10
+    ],
+    "Q03": [
+      0,
+      4,
+      4,
+      10
+    ],
+    "Q05": [
+      1,
+      0,
+      0,
+      10
+    ],
+    "Q06": [
+      2,
+      7,
+      8,
+      10
+    ],
+    "Q07": [
+      0,
+      0,
+      1,
+      10
+    ],
+    "Q09": [
+      9,
+      10,
+      10,
+      10
+    ],
+    "Q10": [
+      2,
+      4,
+      3,
+      10
+    ],
+    "Q11": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "Q12": [
+      9,
+      8,
+      10,
+      10
+    ],
+    "Q14": [
+      4,
+      6,
+      7,
+      10
+    ],
+    "Q15": [
+      7,
+      5,
+      4,
+      10
+    ],
+    "Q16": [
+      2,
+      3,
+      5,
+      10
+    ],
+    "Q17": [
+      1,
+      2,
+      3,
+      10
+    ],
+    "Q18": [
+      8,
+      9,
+      10,
+      10
+    ],
+    "Q19": [
+      2,
+      2,
+      4,
+      10
+    ],
+    "Q22": [
+      10,
+      8,
+      10,
+      10
+    ],
+    "Q33": [
+      2,
+      2,
+      3,
+      10
+    ],
+    "Q34": [
+      0,
+      0,
+      2,
+      10
+    ],
+    "Q35": [
+      1,
+      1,
+      0,
+      10
+    ],
+    "Q38": [
+      4,
+      7,
+      3,
+      10
+    ],
+    "Q40": [
+      2,
+      2,
+      1,
+      10
+    ],
+    "Q42": [
+      0,
+      0,
+      1,
+      10
+    ],
+    "Q43": [
+      9,
+      10,
+      10,
+      10
+    ],
+    "Q45": [
+      9,
+      10,
+      10,
+      10
+    ],
+    "Q46": [
+      5,
+      7,
+      7,
+      10
+    ],
+    "Q47": [
+      1,
+      1,
+      2,
+      10
+    ],
+    "Q48": [
+      1,
+      6,
+      8,
+      10
+    ],
+    "Q49": [
+      9,
+      9,
+      10,
+      10
+    ]
+  },
+  "columns": [
+    "baseline",
+    "initial",
+    "repeat",
+    "trials"
+  ],
+  "totals": [
+    116,
+    143,
+    152,
+    290
+  ],
+  "initial_minus_baseline_95_pp": [
+    3.103448275862069,
+    15.862068965517242
+  ],
+  "repeat_minus_baseline_95_pp": [
+    5.172413793103448,
+    20.0
+  ],
+  "repeat_minus_initial_95_pp": [
+    -2.7586206896551726,
+    8.275862068965518
+  ],
+  "seed": 20261018,
+  "bootstrap_samples": 20000,
+  "method": "Percentile resampling of 29 whole questions, preserving their 10 trials",
+  "exact_initial_repeat_prompt_and_source_matches": 290,
+  "selection_interpretation": "Both unchanged-page runs are shown; neither constitutes independent held-out confirmation. No pooled rate is treated as a new experiment."
+}

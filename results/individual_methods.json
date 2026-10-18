@@ -1,0 +1,1157 @@
+[
+  {
+    "method": "Rendered + semantic cleanup",
+    "folder": "optimisation_v3_rendered_organised_v1",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.45862068965517244,
+    "difference": 0.06551724137931034,
+    "paired_query_bootstrap_95": [
+      -0.0034482758620689646,
+      0.14137931034482756
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.7
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 1.0
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 133,
+      "n": 290
+    }
+  },
+  {
+    "method": "Grounded FAQ",
+    "folder": "optimisation_v3_faq_refined_v1",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.4620689655172413,
+    "difference": 0.06896551724137931,
+    "paired_query_bootstrap_95": [
+      0.010344827586206898,
+      0.13103448275862067
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 0.9
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 134,
+      "n": 290
+    }
+  },
+  {
+    "method": "Structured facts (typed)",
+    "folder": "optimisation_v3_structured_refined_v2",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.4689655172413793,
+    "difference": 0.07586206896551725,
+    "paired_query_bootstrap_95": [
+      0.02758620689655172,
+      0.13103448275862067
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 1.0
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 136,
+      "n": 290
+    }
+  },
+  {
+    "method": "External facts + attribution",
+    "folder": "optimisation_v3_external_refined_v2",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.4275862068965517,
+    "difference": 0.034482758620689655,
+    "paired_query_bootstrap_95": [
+      -0.010344827586206895,
+      0.07931034482758621
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 1.0
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 124,
+      "n": 290
+    }
+  },
+  {
+    "method": "Schema + visible structure",
+    "folder": "optimisation_v3_schema_structured_v1",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.45517241379310347,
+    "difference": 0.06206896551724138,
+    "paired_query_bootstrap_95": [
+      0.013793103448275867,
+      0.11034482758620692
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.7
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 0.9
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 132,
+      "n": 290
+    }
+  },
+  {
+    "method": "Automatic rewrite, repeat",
+    "folder": "optimisation_v3_autogeo_reviewed_repeat1",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.33793103448275863,
+    "difference": -0.055172413793103454,
+    "paired_query_bootstrap_95": [
+      -0.1,
+      -0.013793103448275857
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 0.8
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.0
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 0.8
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 98,
+      "n": 290
+    }
+  },
+  {
+    "method": "Corrected position sensitivity",
+    "folder": "optimisation_v3_position_corrected_v1",
+    "queries": 29,
+    "pairs": 290,
+    "baseline": 0.393103448275862,
+    "rendered": 0.5758620689655174,
+    "difference": 0.18275862068965518,
+    "paired_query_bootstrap_95": [
+      0.1206896551724138,
+      0.2517241379310345
+    ],
+    "per_query": [
+      {
+        "query_id": "Q01",
+        "baseline": 0.1,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q02",
+        "baseline": 0.3,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q03",
+        "baseline": 0.2,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q05",
+        "baseline": 0.2,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q06",
+        "baseline": 0.0,
+        "rendered": 0.5
+      },
+      {
+        "query_id": "Q07",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q09",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q10",
+        "baseline": 0.0,
+        "rendered": 0.1
+      },
+      {
+        "query_id": "Q11",
+        "baseline": 1.0,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q12",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q14",
+        "baseline": 0.4,
+        "rendered": 0.6
+      },
+      {
+        "query_id": "Q15",
+        "baseline": 0.5,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q16",
+        "baseline": 0.4,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q17",
+        "baseline": 0.1,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q18",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q19",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q22",
+        "baseline": 0.9,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q33",
+        "baseline": 0.3,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q34",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q35",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q38",
+        "baseline": 0.3,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q40",
+        "baseline": 0.1,
+        "rendered": 0.2
+      },
+      {
+        "query_id": "Q42",
+        "baseline": 0.0,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q43",
+        "baseline": 0.9,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q45",
+        "baseline": 1.0,
+        "rendered": 1.0
+      },
+      {
+        "query_id": "Q46",
+        "baseline": 0.6,
+        "rendered": 0.9
+      },
+      {
+        "query_id": "Q47",
+        "baseline": 0.2,
+        "rendered": 0.3
+      },
+      {
+        "query_id": "Q48",
+        "baseline": 0.0,
+        "rendered": 0.4
+      },
+      {
+        "query_id": "Q49",
+        "baseline": 0.9,
+        "rendered": 1.0
+      }
+    ],
+    "verified_counts": {
+      "baseline": 114,
+      "optimised": 167,
+      "n": 290
+    }
+  }
+]
