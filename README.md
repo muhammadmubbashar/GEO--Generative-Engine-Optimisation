@@ -20,6 +20,11 @@ The matched historical baseline has **116/290 citing answers (40.0%)**. The unch
 - [Question-level initial/repeat counts](results/Independent_Repeat_Analysis.json)
 - [Individual method results, including unsuccessful methods](results/individual_methods.json)
 
+## Printable PDFs
+
+- [Six-member speaking scripts and professor Q&A](presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf)
+- [Artefact agreement list for the tutor](docs/Artefact_Agreement_List_for_Tutor.pdf)
+
 ## Agreement artefacts
 
 See [the five proposed artefacts and their delivery conditions](docs/ARTEFACTS.md). The supplied Assessment 5 rubric is now mapped; client/tutor acceptance remains unconfirmed.

@@ -41,3 +41,5 @@ Contents: One editable PowerPoint, embedded diagrams and examples, backup eviden
 Delivery: 01_presentation in the assessment ZIP; identical PowerPoint and scripts in the public GitHub repository.
 
 Condition: 18 main slides planned for 20 minutes plus 8 backup slides; 5 minutes for questions. Team names, truthful contributions and final rehearsal must be completed by the team.
+
+[Download the separate tutor PDF](Artefact_Agreement_List_for_Tutor.pdf).

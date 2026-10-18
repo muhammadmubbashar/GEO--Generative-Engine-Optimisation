@@ -9,5 +9,17 @@
   "answers_each": 290,
   "assessment_package": "GEO_Semester_2_Assessment_Package.zip",
   "publication_boundary": "Full raw records and third-party captures supplied separately; no historical results changed.",
-  "presentation_revision": "2026-10-19: simpler main slides, supplied rubric mapped, results unchanged"
+  "presentation_revision": "2026-10-19: simpler main slides, supplied rubric mapped, results unchanged",
+  "pdfs": {
+    "Six_Member_Speaking_Scripts_and_Professor_QA.pdf": {
+      "sha256": "e8cc92ccdac45180bf70de33561bd8e34ad2d0011b99d6532893ad87f5759826",
+      "public_path": "presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf",
+      "package_path": "01_presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf"
+    },
+    "Artefact_Agreement_List_for_Tutor.pdf": {
+      "sha256": "9d58ac3d2197d634191b61241b789aa2da9ba86168782a0a739f4a9cac56c267",
+      "public_path": "docs/Artefact_Agreement_List_for_Tutor.pdf",
+      "package_path": "02_documentation/Artefact_Agreement_List_for_Tutor.pdf"
+    }
+  }
 }
