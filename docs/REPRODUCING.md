@@ -27,4 +27,4 @@ Inspect both an improving and a declining question in the results explorer. Chec
 
 `PUBLIC_MANIFEST_SHA256.json` identifies every public handover file. `HANDOVER_ALIGNMENT.json` records the exact PowerPoint SHA-256, matching the assessment-package deck. No presentation results were regenerated or edited for publication.
 
-Before submission, obtain the full assessment rubric and confirm the artefact agreement, perform the independent human citation review, and rehearse on the presentation computer. Prepared documents do not imply tutor/client approval or personal contribution claims.
+Before submission, rehearse against the supplied Assessment 5 rubric and confirm the artefact agreement, perform the independent human citation review, and rehearse on the presentation computer. Prepared documents do not imply tutor/client approval or personal contribution claims.

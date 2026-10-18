@@ -1,6 +1,6 @@
 # Flight Centre GEO — Semester 2 assessment handover
 
-This is the public companion to the **18 October 2026 professor presentation**: 18 main slides, 8 backup slides, 20 minutes. It replaces the outdated baseline-era landing page. Earlier commits remain historical, not the current instructions.
+This is the public companion to the **19 October 2026 plain-language professor presentation**: 18 main slides, 8 backup slides, 20 minutes. It replaces the outdated baseline-era landing page. Earlier commits remain historical, not the current instructions.
 
 ## Research question and conclusion
 
@@ -19,6 +19,10 @@ The matched historical baseline has **116/290 citing answers (40.0%)**. The unch
 - [Individual implementation snapshots](03_code/individual_snapshots)
 - [Question-level initial/repeat counts](results/Independent_Repeat_Analysis.json)
 - [Individual method results, including unsuccessful methods](results/individual_methods.json)
+
+## Agreement artefacts
+
+See [the five proposed artefacts and their delivery conditions](docs/ARTEFACTS.md). The supplied Assessment 5 rubric is now mapped; client/tutor acceptance remains unconfirmed.
 
 ## What is controlled?
 

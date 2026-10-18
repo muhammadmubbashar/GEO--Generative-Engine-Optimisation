@@ -1,10 +1,10 @@
 # Claim–evidence ledger
 
-Evidence paths below refer to the separately supplied assessment package. They are identifiers, not promises that raw records are public here. Code paths beginning `03_code/` are also included here.
+Evidence identifiers below refer to the separately supplied assessment package. Code paths beginning `03_code/` are also available here.
 
 ## C01: The tested question is conditional FC citation inclusion.
 
-**Classification:** Definition
+Classification: Definition
 
 Check: Inspect record_metrics and shared prompt.
 
@@ -14,7 +14,7 @@ Package evidence: `03_code/selected_snapshot/geo_bench/baseline_v2.py`, `03_code
 
 ## C02: The main fixed comparison has 29 questions and 290 answers per condition.
 
-**Classification:** Verified observation
+Classification: Verified observation
 
 Check: Rescore raw records; group by query and verify 10 pairs each.
 
@@ -24,7 +24,7 @@ Package evidence: `04_evidence/selected/queries.csv`, `02_documentation/Offline_
 
 ## C03: The pipeline chooses source packs; the model chooses answer wording and citations.
 
-**Classification:** Verified implementation
+Classification: Verified implementation
 
 Check: Inspect full prompt and numbered evidence.
 
@@ -34,7 +34,7 @@ Package evidence: `03_code/selected_snapshot/geo_bench/generation/prompts.py`, `
 
 ## C04: The repeated selected run has 116 baseline versus 152 treatment citing answers.
 
-**Classification:** Verified observation
+Classification: Verified observation
 
 Check: Independent standard-library rescoring.
 
@@ -44,7 +44,7 @@ Package evidence: `04_evidence/selected/baseline`, `04_evidence/selected/optimis
 
 ## C05: The initial unchanged-page generation has 143 citations, while the repeat has 152.
 
-**Classification:** Verified observation
+Classification: Verified observation
 
 Check: Verify original record identities, identical initial/repeat prompts and sources, then rescore.
 
@@ -54,7 +54,7 @@ Package evidence: `04_evidence/selected/initial`, `04_evidence/Independent_Repea
 
 ## C06: Reporting only 52.4% could overstate consistency.
 
-**Classification:** Interpretation
+Classification: Interpretation
 
 Check: Display both unchanged-page runs against the same control.
 
@@ -64,7 +64,7 @@ Package evidence: `04_evidence/Independent_Repeat_Analysis.json`
 
 ## C07: The repeat difference is +12.41 percentage points.
 
-**Classification:** Verified calculation
+Classification: Verified calculation
 
 Check: (152−116)/290 × 100.
 
@@ -74,7 +74,7 @@ Package evidence: `02_documentation/Offline_Verification.json`
 
 ## C08: Independent question-bootstrap uncertainty is positive for the selected repeat.
 
-**Classification:** Verified calculation
+Classification: Verified calculation
 
 Check: Resample whole questions with saved random seed and 20,000 draws.
 
@@ -84,7 +84,7 @@ Package evidence: `04_evidence/Independent_Repeat_Analysis.json`, `02_documentat
 
 ## C09: All headline pairs preserve source order and competitor text.
 
-**Classification:** Verified implementation
+Classification: Verified implementation
 
 Check: Check query equality, source URLs/order and competitor text.
 
@@ -94,7 +94,7 @@ Package evidence: `02_documentation/Offline_Verification.json`
 
 ## C10: All 330 FC source occurrences match the selected cleaned outputs under the character cap.
 
-**Classification:** Verified implementation
+Classification: Verified implementation
 
 Check: Compare delivered text with the matching output prefix.
 
@@ -104,7 +104,7 @@ Package evidence: `02_documentation/Offline_Verification.json`, `04_evidence/pag
 
 ## C11: The final FAQ refinement rebuild matches 52 saved page outputs.
 
-**Classification:** Verified implementation
+Classification: Verified implementation
 
 Check: Run deterministic final-stage rebuild; compare HTML and cleaned-text hashes.
 
@@ -114,7 +114,7 @@ Package evidence: `02_documentation/Refinement_Rebuild.json`, `03_code/rebuild_f
 
 ## C12: FAQ-stage validation preserves existing answers, cards, metadata and links.
 
-**Classification:** Verified scoped observation
+Classification: Verified scoped observation
 
 Check: Inspect invariant checks and saved results.
 
@@ -124,7 +124,7 @@ Package evidence: `04_evidence/pages/validation.json`, `03_code/selected_snapsho
 
 ## C13: The six individual content families have different outcomes.
 
-**Classification:** Verified observation
+Classification: Verified observation
 
 Check: Rescore featured primary fixed records against their 114/290 control.
 
@@ -134,7 +134,7 @@ Package evidence: `04_evidence/individual_methods.json`, `02_documentation/Offli
 
 ## C14: External enrichment’s aggregate gain does not identify an enrichment effect.
 
-**Classification:** Interpretation
+Classification: Interpretation
 
 Check: Inspect changed versus unchanged prompts; retain audit diagnosis.
 
@@ -144,7 +144,7 @@ Package evidence: `02_documentation/historical/V3_INDIVIDUAL_AND_COMBINED_AUDIT_
 
 ## C15: The tested schema variant changed both visible content and markup.
 
-**Classification:** Verified implementation
+Classification: Verified implementation
 
 Check: Inspect the transformation and delivered input.
 
@@ -154,7 +154,7 @@ Package evidence: `03_code/individual_snapshots/optimisation_v3_schema_structure
 
 ## C16: The rewrite trial is not a reproduction of AutoGEO preference learning.
 
-**Classification:** Scope correction
+Classification: Scope correction
 
 Check: Distinguish generic rewriting from learned engine-preference optimisation.
 
@@ -164,7 +164,7 @@ Package evidence: `03_code/individual_snapshots/optimisation_v3_autogeo_reviewed
 
 ## C17: Corrected position preserves source text and competitor relative order.
 
-**Classification:** Verified observation
+Classification: Verified observation
 
 Check: Check all 290 matched corrected-position pairs.
 
@@ -174,7 +174,7 @@ Package evidence: `02_documentation/Offline_Verification.json`
 
 ## C18: The reindexed and fresh-wording checks do not establish broad generalisation.
 
-**Classification:** Interpretation
+Classification: Interpretation
 
 Check: Inspect the separate intervals, task definitions and denominators.
 
@@ -184,7 +184,7 @@ Package evidence: `04_evidence/secondary/r5_original_unchanged_reindexed_repeat_
 
 ## C19: A governed content-template pilot is a reasonable application to investigate.
 
-**Classification:** Proposed application
+Classification: Proposed application
 
 Check: Use the working transformation as a prototype with live governance and new evaluation.
 
@@ -194,7 +194,7 @@ Package evidence: `04_evidence/pages/outputs.json`
 
 ## C20: Citation correctness and booking recommendation require further human review.
 
-**Classification:** Unresolved limitation
+Classification: Unresolved limitation
 
 Check: Blind review of complete answers and cited sources using an explicit rubric.
 
@@ -202,19 +202,19 @@ Boundary: Presence of a reference does not establish support or commercial endor
 
 Package evidence: `04_evidence/Results_Explorer.html`
 
-## C21: Tutorial 10 supports artefact scope, quality and handover requirements.
+## C21: Assessment 5 guide and rubric are now available and mapped; handover approval remains unconfirmed.
 
-**Classification:** Verified requirement
+Classification: Verified document review
 
-Check: Read original slides 4–7.
+Check: Read the user-supplied Assessment 5 guide and rubric; map slides to requirements.
 
-Boundary: The full Assignment 5 rubric and signed handover agreement were not located in the relevant local search.
+Boundary: Rehearsal, truthful contributions, AI acknowledgement and handover acceptance remain team responsibilities.
 
-Package evidence: `02_documentation/Tutorial10_Source_Extract.json`
+Package evidence: `02_documentation/Assessment_Mapping.json`, `02_documentation/Artefact_Agreement_List.html`
 
 ## C22: Semester 1 described broader evaluation than was established in the final fixed result.
 
-**Classification:** Scope correction
+Classification: Scope correction
 
 Check: Compare proposed relevance/judge/external-validation stages with actual output evidence.
 
@@ -224,7 +224,7 @@ Package evidence: `02_documentation/research_sources/Pillar_4.json`
 
 ## C23: Universal FAQ-schema extraction priority and universal no-JavaScript crawler behaviour are not established.
 
-**Classification:** Unsupported generalisations excluded
+Classification: Unsupported generalisations excluded
 
 Check: Compare Semester 1 wording with official Google documentation.
 

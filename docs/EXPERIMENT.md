@@ -3,7 +3,7 @@
 - Slides 1–3: conditional citation question, outcome definition, RAG-style saved-context workflow.
 - Slides 4–6: 29 eligible questions, matched reading packs, six individual families and selected combination.
 - Slides 7–10: 52 page outputs, rendered offer example, FAQ restoration and implementation verification.
-- Slides 11–13: source-number scoring, both unchanged-treatment runs, whole-question uncertainty.
+- Slides 11–13: source-number scoring, both unchanged-treatment runs, plain-language uncertainty explanation (detailed calculations remain in the results files).
 - Slides 14–16: separate position sensitivity, practical meaning and broader limitations.
 - Slides 17–18: delivered artefacts and bounded conclusion.
 - Slides 19–26: recipe, full illustrative answers, literature, repeat variability and assessor walkthrough.

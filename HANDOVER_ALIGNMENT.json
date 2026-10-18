@@ -1,5 +1,5 @@
 {
-  "presentation_sha256": "561a6be44a61f6325ac8cab5ee6a60befcfb16d38a8017a6fb92354928bdbaa6",
+  "presentation_sha256": "b25da1810c464ba0854ef943b190352b6c58347deb3c36bc415058ffdbe8209f",
   "main_slides": 18,
   "backup_slides": 8,
   "planned_minutes": 20,
@@ -8,5 +8,6 @@
   "repeat_citations": 152,
   "answers_each": 290,
   "assessment_package": "GEO_Semester_2_Assessment_Package.zip",
-  "publication_boundary": "Full raw records and third-party captures supplied separately; no historical results changed."
+  "publication_boundary": "Full raw records and third-party captures supplied separately; no historical results changed.",
+  "presentation_revision": "2026-10-19: simpler main slides, supplied rubric mapped, results unchanged"
 }
