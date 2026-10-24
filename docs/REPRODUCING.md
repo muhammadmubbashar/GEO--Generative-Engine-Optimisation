@@ -12,7 +12,7 @@ This recomputes totals and intervals from the public question-level counts. It d
 
 ## Raw-record audit in the separate assessment package
 
-Extract `GEO_Semester_2_Assessment_Package.zip`, open `START_HERE.html`, and run from its submission root:
+Extract `GEO_Final_Handover.zip`, open `START_HERE.html`, and run from its submission root:
 
 ```sh
 python 03_code/verify_results.py

@@ -1,45 +1,23 @@
-# Proposed artefacts for the handover agreement
+# Final artefact delivery inventory
+25 October 2026. Prepared delivery list; tutor/client acceptance is not asserted.
 
-Confirm recipient, delivery date, delivery channel and acceptance with the tutor and Flight Centre. This is not approval or a signed agreement.
+1. GEO Experiment and Optimisation Software
+Selected historical implementation, individual method snapshots, generation/evaluation code and portable verification scripts. Delivery: 03_code in the private ZIP and public GitHub. Research prototype, not deployed software.
 
-## 1. GEO Experiment and Optimisation Software
+2. Optimised Travel Page Demonstrator
+52 saved outputs, corresponding baseline evidence, fingerprints and page comparisons. Delivery: 04_evidence in the private ZIP. Historical offers; not current booking content.
 
-Contents: Selected page-processing and evaluation code, relevant individual-method snapshots and verification scripts.
+3. Experimental Results and Reproducibility Pack
+Queries, frozen page database, original answers, source maps, individual/combined results, position diagnostic and secondary checks. Delivery: private 04_evidence and offline scripts. GitHub publishes aggregate summaries only. Original records are unchanged.
 
-Delivery: Public GitHub repository; matching historical code in 03_code of the assessment package.
+4. Technical Report and Handover Guide
+Revised PDF, claim ledger, assessment context, current validation record and reproduction instructions. Current report and companion documentation are also public. Human citation-support review and relevance calibration remain unresolved.
 
-Condition: Research prototype. Live API generation and full historical search rebuilding require additional inputs/provider access; no production deployment is included.
+5. Final Presentations and Notes
+Both clearly labelled decks: FC leadership briefing and professor assessment presentation with saved-evidence demo. Embedded/matching notes and earlier professor preparation PDFs are included. Earlier preparation material is historical; use the delivered deck for current numbering. Both current decks match GitHub byte-for-byte.
 
-## 2. Optimised Travel Page Demonstrator
+Opening instructions
+Extract GEO_Final_Handover.zip completely and open START_HERE.html. Keep all folders together. Public GitHub intentionally excludes full third-party captures and answer archives; its aggregate check is not the private raw-record audit.
 
-Contents: 52 saved optimised page outputs, selected baseline comparisons and manifests identifying the page versions.
-
-Delivery: 04_evidence/pages and page comparison views in the assessment ZIP.
-
-Condition: Offline captured-page demonstrator. Historical fares and capture differences remain disclosed; not current customer booking content.
-
-## 3. Experimental Results and Reproducibility Pack
-
-Contents: Saved generated answers, source maps, numerical results, individual and combined comparisons, limitations and offline checking tools.
-
-Delivery: 04_evidence, verification reports and scripts in the assessment ZIP; aggregate numerical summaries on GitHub.
-
-Condition: Recorded results can be inspected and recounted. Repeated live AI generation is not guaranteed to return identical answers. Independent claim-support review remains outstanding.
-
-## 4. Technical Report and Handover Guide
-
-Contents: Architecture, method explanations, claim–evidence ledger, assessment mapping, reproduction instructions and review checklist.
-
-Delivery: 02_documentation and START_HERE.html in the assessment ZIP; concise companion documentation on GitHub.
-
-Condition: Documentation of the delivered scope and known limitations. Does not assert client/tutor acceptance or unverified personal contributions.
-
-## 5. Final Presentation and Presenter Notes
-
-Contents: One editable PowerPoint, embedded diagrams and examples, backup evidence slides and six speaking guides.
-
-Delivery: 01_presentation in the assessment ZIP; identical PowerPoint and scripts in the public GitHub repository.
-
-Condition: 18 main slides planned for 20 minutes plus 8 backup slides; 5 minutes for questions. Team names, truthful contributions and final rehearsal must be completed by the team.
-
-[Download the separate tutor PDF](Artefact_Agreement_List_for_Tutor.pdf).
+Result boundary
+116/290 baseline versus 152/290 selected repeat (40.0% versus 52.4%); initial unchanged-page run 143/290. Individual controls use 114/290. These are exploratory citation-inclusion results. No promise of recommendation, live-platform uplift or sales. FC can implement recommendations without reproducing our sandbox.

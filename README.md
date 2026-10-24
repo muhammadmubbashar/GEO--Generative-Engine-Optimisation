@@ -1,52 +1,47 @@
-# Flight Centre GEO — Semester 2 assessment handover
+# Flight Centre GEO — final handover, 25 October 2026
 
-This is the public companion to the **19 October 2026 plain-language professor presentation**: 18 main slides, 8 backup slides, 20 minutes. It replaces the outdated baseline-era landing page. Earlier commits remain historical, not the current instructions.
+This is the public companion to the private **GEO_Final_Handover.zip**. The ZIP includes raw evidence and START_HERE.html; this repository intentionally contains only scoped public artefacts.
 
-## Research question and conclusion
+- [FC leadership PPT](presentation/FC_GEO_Leadership_Final.pptx)
+- [Professor PPT with demo](presentation/Professor_Final_With_Working_Demo.pptx)
+- [Revised technical report](docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf)
+- [Artefact inventory](docs/ARTEFACTS.md)
+- [Reproduction instructions](docs/REPRODUCING.md)
 
-When Flight Centre information is already supplied alongside competitors, does changing its page representation increase **answer-level citation inclusion**?
+## Authoritative current files
+- presentation/FC_GEO_Leadership_Final.pptx — corrected FC leadership briefing and embedded notes.
+- presentation/Professor_Final_With_Working_Demo.pptx — retained professor assessment presentation with saved-evidence demo.
+- docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf — revised supplied report, with corrected interpretation and FC implementation appendix.
+- docs/Artefact_Agreement_List_for_Tutor.pdf — current delivery inventory; not proof of acceptance.
+- docs/Validation_Record.md — checks performed and unresolved limits.
 
-The matched historical baseline has **116/290 citing answers (40.0%)**. The unchanged selected treatment produced **143/290 (49.3%) initially** and **152/290 (52.4%) on repeat**. The gains are **9.3 and 12.4 percentage points**, respectively. Both runs are shown; the higher run is not a guaranteed production rate. These are exploratory fixed-context results, not proof of increased booking recommendations, live discovery or revenue.
+## Agreed artefacts
+1. Experiment/optimisation software: 03_code, including selected and individual snapshots.
+2. Page demonstrator: 52 optimised outputs and baseline comparisons in 04_evidence/pages and comparison views.
+3. Results/reproducibility pack: queries, captured page database, saved answers, source maps and result summaries in 04_evidence.
+4. Technical report/handover: current PDF, claim ledger, assessment mapping and checking instructions in 02_documentation.
+5. Presentations/notes: both labelled decks and professor demo/preparation materials in 01_presentation.
 
-## Start here
+## Verified results and limits
+Combined: baseline 116/290 (40.0%), initial treatment 143/290 (49.3%), repeat 152/290 (52.4%). The selected repeat gain is +12.4 percentage points, approximately +31.0% relative. The individual-method baseline is 114/290. Do not swap controls or add method gains.
 
-- [Exact presentation](presentation/GEO_Semester_2_Final_Presentation.pptx)
-- [Six timed presenter scripts](presentation/Speaking_Guide.html) — download to open HTML in a browser
-- [Experiment and slide alignment](docs/EXPERIMENT.md)
-- [Claims and evidence boundaries](docs/CLAIMS.md)
-- [Reproduction and artefact handover](docs/REPRODUCING.md)
-- [Selected historical implementation](03_code/selected_snapshot)
-- [Individual implementation snapshots](03_code/individual_snapshots)
-- [Question-level initial/repeat counts](results/Independent_Repeat_Analysis.json)
-- [Individual method results, including unsuccessful methods](results/individual_methods.json)
+The selected stack contains rendered-content processing, a joint fact/question block and FAQ restoration/repositioning. These are three content groups and four technical operations; they are the same implementation. Added schema, external enrichment, generic rewrite and source-position manipulation are separate experiments, not part of this stack.
 
-## Printable PDFs
+Citation inclusion is not brand recommendation, factual support, relevance, live discovery or revenue. Historical baseline reuse, capture differences and iterative development constrain interpretation. Secondary retrieval and reworded-query evidence remain available and are not pooled with the headline. Human citation-support review remains outstanding.
 
-- [Six-member speaking scripts and professor Q&A](presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf)
-- [Artefact agreement list for the tutor](docs/Artefact_Agreement_List_for_Tutor.pdf)
+## Offline reproduction
+Run with Python 3.10+ (standard library):
+```
+python 03_code/verify_results.py
+python 03_code/verify_repeated_runs.py
+```
+The final FAQ-stage rebuild needs dependencies in 03_code/refinement_requirements.txt; see 03_code/README.md. Live generation requires provider credentials and original runtime configuration and may incur costs. No paid experiment was run for this release.
 
-## Agreement artefacts
+## Versions and publication boundary
+Historical code, locks, records and preparation documents preserve what existed at the time. They are evidence, not current production instructions. Earlier preparation PDFs can refer to older slide counts; use the delivered professor deck and its matching notes for that presentation. Neither preparation material nor prior assessment mapping governs the FC leadership deck.
 
-See [the five proposed artefacts and their delivery conditions](docs/ARTEFACTS.md). The supplied Assessment 5 rubric is now mapped; client/tutor acceptance remains unconfirmed.
+FC implementation is normal template/content work with routine monitoring. Repeating our sandbox or achieving 52.4% on live platforms is not a prerequisite or a promise.
 
-## What is controlled?
+GitHub contains the same current decks/report, code snapshots and public aggregates. Full third-party captures and generated-answer archives are private handover material and are intentionally excluded from public GitHub. Historical repository commits remain historical. MANIFEST_SHA256.json verifies this package; HANDOVER_ALIGNMENT.json identifies shared deliverables.
 
-29 eligible questions × 2 source arrangements × 5 repeats = 290 answers per condition. The fixed comparison matches questions, source identities/order, competitor text and instructions. The pipeline supplies evidence; the model chooses wording and citations. It is a RAG-style saved-context test, without live browsing or fine-tuning during generation.
-
-A citing answer contains at least one valid citation to a supplied Flight Centre source. Multiple FC references in one answer still count once. Presence does not establish citation correctness or a recommendation.
-
-## Selected implementation
-
-Captured rendered content, semantic cleanup, grounded facts/questions and a final FAQ extraction refinement. The selected outputs retain original rendered offers; they are **not** the later price-matched treatment. External enrichment, added schema, broad automatic rewriting and source-position manipulation are not components of this selected stack.
-
-The individual-method control is **114/290 (39.3%)**, distinct from the combined comparison's 116/290. Do not swap controls or add method gains together. Some historical modules contain other methods to preserve their imports/provenance; their presence does not make them part of the final stack.
-
-## Important boundaries
-
-Historical baseline reuse, capture/product differences, iterative selection, related questions and one saved model configuration limit causal and external validity. Whole-question bootstrap intervals do not remove these limitations. Reindexed and secondary evidence did not establish a general discovery or recommendation improvement. Independent human review of substantive citation support remains necessary.
-
-## Public repository versus assessment package
-
-This repository contains necessary presentation, project code and numerical summaries. The separately delivered **GEO_Semester_2_Assessment_Package.zip** includes the full answers, source maps, captured page evidence, report and offline raw-record checks. Full third-party captures and generated-answer archives are not newly published here. The public aggregate check is not a substitute for that raw-record audit.
-
-No credentials, personal documents, local caches, draft decks or full working-directory dump are included. No new API experiment was run for this handover. Historical commits are preserved and may contain earlier public material.
+Public numerical check: `python scripts/verify_public_counts.py`. Private ZIP checks need the separately delivered evidence.

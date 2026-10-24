@@ -1,25 +1,44 @@
 {
-  "presentation_sha256": "b25da1810c464ba0854ef943b190352b6c58347deb3c36bc415058ffdbe8209f",
-  "main_slides": 18,
-  "backup_slides": 8,
-  "planned_minutes": 20,
-  "baseline_citations": 116,
-  "initial_citations": 143,
-  "repeat_citations": 152,
-  "answers_each": 290,
-  "assessment_package": "GEO_Semester_2_Assessment_Package.zip",
-  "publication_boundary": "Full raw records and third-party captures supplied separately; no historical results changed.",
-  "presentation_revision": "2026-10-19: simpler main slides, supplied rubric mapped, results unchanged",
-  "pdfs": {
-    "Six_Member_Speaking_Scripts_and_Professor_QA.pdf": {
-      "sha256": "e8cc92ccdac45180bf70de33561bd8e34ad2d0011b99d6532893ad87f5759826",
-      "public_path": "presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf",
-      "package_path": "01_presentation/Six_Member_Speaking_Scripts_and_Professor_QA.pdf"
+  "date": "2026-10-25",
+  "package": "GEO_Final_Handover.zip",
+  "presentations": {
+    "fc": {
+      "slides": 31,
+      "hidden": 5,
+      "main": 26,
+      "sha256": "d05d303904b4a77674340a3b8c553ca6ad83e447b66efa96e6584dbeb2d96d44"
     },
-    "Artefact_Agreement_List_for_Tutor.pdf": {
-      "sha256": "9d58ac3d2197d634191b61241b789aa2da9ba86168782a0a739f4a9cac56c267",
-      "public_path": "docs/Artefact_Agreement_List_for_Tutor.pdf",
-      "package_path": "02_documentation/Artefact_Agreement_List_for_Tutor.pdf"
+    "professor": {
+      "slides": 20,
+      "hidden": 0,
+      "main": 20,
+      "sha256": "1263ab4360672ff657976840ed778d01b75051cc5c9ffd05c26cda3d28edc3a5"
+    }
+  },
+  "baseline": 116,
+  "initial": 143,
+  "optimised": 152,
+  "n_per_condition": 290,
+  "questions": 29,
+  "individual_control": 114,
+  "report_sha256": "128aa5e53647318846b8d0e59f35475e1d22c1b5c1c696f2f51950a22110c95e",
+  "publication_boundary": "Full captures and original answer archives are private; public aggregates are not raw-record audits.",
+  "shared_files": {
+    "presentation/FC_GEO_Leadership_Final.pptx": {
+      "package_path": "01_presentation/FC_GEO_Leadership_Final.pptx",
+      "sha256": "d05d303904b4a77674340a3b8c553ca6ad83e447b66efa96e6584dbeb2d96d44"
+    },
+    "presentation/Professor_Final_With_Working_Demo.pptx": {
+      "package_path": "01_presentation/Professor_Final_With_Working_Demo.pptx",
+      "sha256": "1263ab4360672ff657976840ed778d01b75051cc5c9ffd05c26cda3d28edc3a5"
+    },
+    "docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf": {
+      "package_path": "02_documentation/GEO_Technical_Report_and_Handover_Guide_Team62.pdf",
+      "sha256": "128aa5e53647318846b8d0e59f35475e1d22c1b5c1c696f2f51950a22110c95e"
+    },
+    "docs/Artefact_Agreement_List_for_Tutor.pdf": {
+      "package_path": "02_documentation/Artefact_Agreement_List_for_Tutor.pdf",
+      "sha256": "8581c644e235675c2a5704182057def79955f9513a9f148c7fe9d24afa292a28"
     }
   }
 }
