@@ -4,7 +4,7 @@
 1. GEO Experiment and Optimisation Software
 Selected historical implementation, individual method snapshots, generation/evaluation code and portable verification scripts. Delivery: 03_code in the private ZIP and public GitHub. Research prototype, not deployed software.
 
-2. Optimised Travel Page Demonstrator
+2. Optimised Travel Page Evidence
 52 saved outputs, corresponding baseline evidence, fingerprints and page comparisons. Delivery: 04_evidence in the private ZIP. Historical offers; not current booking content.
 
 3. Experimental Results and Reproducibility Pack

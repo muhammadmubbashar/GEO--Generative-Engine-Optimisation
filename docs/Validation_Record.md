@@ -3,7 +3,7 @@
 - Raw-record offline verification: PASS; 116/290 baseline, 152/290 optimised; 29 questions. All 290 headline pairs match URLs/order and unchanged competitor text.
 - Initial/repeat verifier rerun from the assembled package; saved output retained in Repeat_Verification_Current.txt.
 - Selected stack outputs, original answers and historical code are copied without changing experimental contents.
-- Leadership deck: 26 main slides, 5 hidden backups. Professor deck remains separately labelled; counts and hashes recorded in HANDOVER_ALIGNMENT.json.
+- Leadership deck: 22 main slides, 13 hidden backups. Professor deck remains separately labelled; counts and hashes recorded in HANDOVER_ALIGNMENT.json.
 - Corrected report distinguishes inference, implementation recommendation and observation; three content groups are the same four technical operations.
 - No new model experiment or website deployment performed.
 

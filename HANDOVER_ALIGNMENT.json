@@ -3,10 +3,10 @@
   "package": "GEO_Final_Handover.zip",
   "presentations": {
     "fc": {
-      "slides": 31,
-      "hidden": 5,
-      "main": 26,
-      "sha256": "d05d303904b4a77674340a3b8c553ca6ad83e447b66efa96e6584dbeb2d96d44"
+      "slides": 35,
+      "hidden": 13,
+      "main": 22,
+      "sha256": "14de8aca109e02f3380cda75d316f0655c2529db67f967e67c9aa63509092b9d"
     },
     "professor": {
       "slides": 20,
@@ -26,20 +26,18 @@
   "shared_files": {
     "presentation/FC_GEO_Leadership_Final.pptx": {
       "package_path": "01_presentation/FC_GEO_Leadership_Final.pptx",
-      "sha256": "d05d303904b4a77674340a3b8c553ca6ad83e447b66efa96e6584dbeb2d96d44"
+      "sha256": "14de8aca109e02f3380cda75d316f0655c2529db67f967e67c9aa63509092b9d"
     },
     "presentation/Professor_Final_With_Working_Demo.pptx": {
       "package_path": "01_presentation/Professor_Final_With_Working_Demo.pptx",
       "sha256": "1263ab4360672ff657976840ed778d01b75051cc5c9ffd05c26cda3d28edc3a5"
     },
     "docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf": {
-      "package_path": "02_documentation/GEO_Technical_Report_and_Handover_Guide_Team62.pdf",
+      "package_path": "02_documentation/GEO_Technical_Report_and_Handover_Guide_Team62_vf.pdf",
       "sha256": "ddd6eec0270d26c633f6b75e088b80d7588e7fcd7a9b73d2c2af208f36c8e653"
-    },
-    "docs/Artefact_Agreement_List_for_Tutor.pdf": {
-      "package_path": "02_documentation/Artefact_Agreement_List_for_Tutor.pdf",
-      "sha256": "8581c644e235675c2a5704182057def79955f9513a9f148c7fe9d24afa292a28"
     }
   },
-  "report_revision": "1.4: Team 62 naming; aligned contents; two-column methods table; selected content-test scope retained"
+  "report_revision": "1.4: Team 62 naming; aligned contents; two-column methods table; selected content-test scope retained",
+  "private_agreement": "IFN736_A4_Artefact_Agreement_Team62_vf.docx",
+  "scope_note": "Streamlined user-selected submission; legacy preparation guides are not required. Raw experiment evidence is unchanged."
 }

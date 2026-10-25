@@ -17,7 +17,7 @@ This is the public companion to the private **GEO_Final_Handover.zip**. The ZIP 
 
 ## Agreed artefacts
 1. Experiment/optimisation software: 03_code, including selected and individual snapshots.
-2. Page demonstrator: 52 optimised outputs and baseline comparisons in 04_evidence/pages and comparison views.
+2. Saved page evidence: 52 optimised outputs and baseline comparisons in 04_evidence/pages and comparison views.
 3. Results/reproducibility pack: queries, captured page database, saved answers, source maps and result summaries in 04_evidence.
 4. Technical report/handover: current PDF, claim ledger, assessment mapping and checking instructions in 02_documentation.
 5. Presentations/notes: both labelled decks and professor demo/preparation materials in 01_presentation.
@@ -38,7 +38,7 @@ python 03_code/verify_repeated_runs.py
 The final FAQ-stage rebuild needs dependencies in 03_code/refinement_requirements.txt; see 03_code/README.md. Live generation requires provider credentials and original runtime configuration and may incur costs. No paid experiment was run for this release.
 
 ## Versions and publication boundary
-Historical code, locks, records and preparation documents preserve what existed at the time. They are evidence, not current production instructions. Earlier preparation PDFs can refer to older slide counts; use the delivered professor deck and its matching notes for that presentation. Neither preparation material nor prior assessment mapping governs the FC leadership deck.
+Historical code, locks, records and preparation documents preserve what existed at the time. They are evidence, not current production instructions. Earlier preparation guides in the repository are historical; the streamlined private submission contains the decks and embedded notes. Neither preparation material nor prior assessment mapping governs the FC leadership deck.
 
 FC implementation is normal template/content work with routine monitoring. Repeating our sandbox or achieving 52.4% on live platforms is not a prerequisite or a promise.
 
