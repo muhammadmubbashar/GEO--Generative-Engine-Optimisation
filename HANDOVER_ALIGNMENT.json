@@ -21,7 +21,7 @@
   "n_per_condition": 290,
   "questions": 29,
   "individual_control": 114,
-  "report_sha256": "128aa5e53647318846b8d0e59f35475e1d22c1b5c1c696f2f51950a22110c95e",
+  "report_sha256": "afcd9263fa6d0e5ba5ced968f8c5a3afa76c5cbdfafd2d20e1cdb697354f0540",
   "publication_boundary": "Full captures and original answer archives are private; public aggregates are not raw-record audits.",
   "shared_files": {
     "presentation/FC_GEO_Leadership_Final.pptx": {
@@ -34,11 +34,12 @@
     },
     "docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf": {
       "package_path": "02_documentation/GEO_Technical_Report_and_Handover_Guide_Team62.pdf",
-      "sha256": "128aa5e53647318846b8d0e59f35475e1d22c1b5c1c696f2f51950a22110c95e"
+      "sha256": "afcd9263fa6d0e5ba5ced968f8c5a3afa76c5cbdfafd2d20e1cdb697354f0540"
     },
     "docs/Artefact_Agreement_List_for_Tutor.pdf": {
       "package_path": "02_documentation/Artefact_Agreement_List_for_Tutor.pdf",
       "sha256": "8581c644e235675c2a5704182057def79955f9513a9f148c7fe9d24afa292a28"
     }
-  }
+  },
+  "report_revision": "1.3: selected content-test scope; saved evidence, not a page-upload product; Muhammad Mubbashar listed first as Team Leader"
 }
