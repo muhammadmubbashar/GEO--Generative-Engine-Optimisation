@@ -12,3 +12,5 @@ Not certified: truth of every captured travel fact, sentence-level citation enta
 Public aggregates and private raw records are different verification levels. Their publication boundary is intentional, not a mismatch.
 
 Report revision 1.3 narrows the narrative to the selected content test, removes the unassigned target and submission-map appendix, and clarifies the positive schema test was separate from the selected stack. Historical evidence and presentations are unchanged.
+
+Report revision 1.4 removes the Signal Six nickname, rebuilds the contents layout and removes the final-stack inclusion column from Table 7. Results, stack evidence and presentations are unchanged.
