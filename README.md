@@ -45,3 +45,8 @@ FC implementation is normal template/content work with routine monitoring. Repea
 GitHub contains the same current decks/report, code snapshots and public aggregates. Full third-party captures and generated-answer archives are private handover material and are intentionally excluded from public GitHub. Historical repository commits remain historical. MANIFEST_SHA256.json verifies this package; HANDOVER_ALIGNMENT.json identifies shared deliverables.
 
 Public numerical check: `python scripts/verify_public_counts.py`. Private ZIP checks need the separately delivered evidence.
+
+## Presentation delivered to Flight Centre
+The current FC leadership file is an exact copy of the user-supplied **FC_GEO_Leadership_Final_Presentation_v5.pptx**, presented on 26 October 2026. The stable handover filename is FC_GEO_Leadership_Final.pptx. It supersedes preparation decks; the professor presentation is unchanged. This records delivery, not client approval.
+
+See [citation/query Q&A](docs/Citation_and_Query_QA.md) for scoring, query coverage and interpretation boundaries.

@@ -1,12 +1,15 @@
 {
-  "date": "2026-10-25",
+  "date": "2026-10-26",
   "package": "GEO_Final_Handover.zip",
   "presentations": {
     "fc": {
-      "slides": 35,
-      "hidden": 13,
-      "main": 22,
-      "sha256": "14de8aca109e02f3380cda75d316f0655c2529db67f967e67c9aa63509092b9d"
+      "slides": 29,
+      "hidden": 5,
+      "main": 24,
+      "sha256": "d8b9e21e3b35d44520da4c1992cffb1b50ba32293cf0fb05ee15f930ceb245ce",
+      "source_filename": "FC_GEO_Leadership_Final_Presentation_v5.pptx",
+      "status": "User-confirmed deck presented to Flight Centre",
+      "presentation_date": "2026-10-26"
     },
     "professor": {
       "slides": 20,
@@ -26,7 +29,7 @@
   "shared_files": {
     "presentation/FC_GEO_Leadership_Final.pptx": {
       "package_path": "01_presentation/FC_GEO_Leadership_Final.pptx",
-      "sha256": "14de8aca109e02f3380cda75d316f0655c2529db67f967e67c9aa63509092b9d"
+      "sha256": "d8b9e21e3b35d44520da4c1992cffb1b50ba32293cf0fb05ee15f930ceb245ce"
     },
     "presentation/Professor_Final_With_Working_Demo.pptx": {
       "package_path": "01_presentation/Professor_Final_With_Working_Demo.pptx",
@@ -35,6 +38,10 @@
     "docs/GEO_Technical_Report_and_Handover_Guide_Team62.pdf": {
       "package_path": "02_documentation/GEO_Technical_Report_and_Handover_Guide_Team62_vf.pdf",
       "sha256": "ddd6eec0270d26c633f6b75e088b80d7588e7fcd7a9b73d2c2af208f36c8e653"
+    },
+    "docs/Citation_and_Query_QA.md": {
+      "package_path": "02_documentation/Citation_and_Query_QA.md",
+      "sha256": "b8235443da46b4b662b183c5572f9ae24d4085466585894c36fa16b5bb9c1248"
     }
   },
   "report_revision": "1.4: Team 62 naming; aligned contents; two-column methods table; selected content-test scope retained",
